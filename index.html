@@ -64,7 +64,7 @@
                 <span class="font-extrabold text-sm flex items-center gap-1.5 text-stone-900">
                     <span>📢</span> <span id="eventTitle">ఈవెంట్ వివరాలు లోడ్ అవుతున్నాయి...</span>
                 </span>
-                <span id="eventBadgeStatus" class="text-[10px] bg-stone-950 text-yellow-300 font-black px-2 py-0.5 rounded-full border border-yellow-400/40">ఈవెంట్ ప్రకటన</span>
+                <span id="eventBadgeStatus" class="text-[10px] bg-stone-950 text-yellow-300 font-black px-2 py-0.5 rounded-full border border-yellow-400/40">ప్రత్యక్ష ఈవెంట్</span>
             </div>
 
             <!-- LIVE VIDEO STREAM CONTAINER -->
@@ -297,7 +297,7 @@
     <!-- JavaScript Logic -->
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwakVkrU7Ch_WY5wXyNLlGlVjSZFsL7-LPgJ-0i5fs99fei5tTHTD1bOl-JvWYm3DIw/exec";
-        const SITE_VERSION = "v2"; // Clears old cache and forces re-registration once
+        const SITE_VERSION = "v2";
 
         function checkResetVersion() {
             let savedVersion = localStorage.getItem('polamma_site_version');
@@ -389,7 +389,19 @@
                 const latestEvent = database.events[0];
                 document.getElementById('eventTitle').innerText = latestEvent.title || 'గ్రామ కమిటీ మీటింగ్';
                 document.getElementById('eventDate').innerText = latestEvent.date || '--/--/----';
+                document.getElementById('eventTime').innerText = latestEvent.time || '--:-- --';
+                document.getElementById('eventLocation').innerText = latestEvent.location || 'గ్రామ సచివాలయం';
                 document.getElementById('eventDetails').innerText = latestEvent.details || 'వివరాలు నమోదు కాలేదు';
+
+                const liveWrapper = document.getElementById('liveStreamWrapper');
+                const liveIframe = document.getElementById('liveStreamIframe');
+                if (latestEvent.liveLink && latestEvent.liveLink.trim() !== "") {
+                    liveIframe.src = latestEvent.liveLink.trim();
+                    liveWrapper.classList.remove('hidden');
+                } else {
+                    liveWrapper.classList.add('hidden');
+                    liveIframe.src = "";
+                }
             }
         }
 
