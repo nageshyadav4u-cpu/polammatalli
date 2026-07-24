@@ -51,18 +51,6 @@
     <!-- Main Content Container -->
     <main class="w-full max-w-md px-4 py-4 space-y-6 flex-grow pb-16">
 
-        <!-- Banner Image Section -->
-        <div class="w-full h-48 bg-gradient-to-br from-yellow-700 to-amber-900 rounded-xl overflow-hidden border-2 border-yellow-500 relative shadow-xl shadow-black/30">
-            <div id="bannerSlider" class="flex w-full h-full overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar">
-                <div class="w-full h-full shrink-0 snap-center">
-                    <img src="ChatGPT Image Jul 20, 2026, 08_04_40 PM.png" alt="Banner 1" class="w-full h-full object-cover">
-                </div>
-                <div class="w-full h-full shrink-0 snap-center">
-                    <img src="ChatGPT Image Jul 20, 2026, 07_54_10 PM.png" alt="Banner 2" class="w-full h-full object-cover">
-                </div>
-            </div>
-        </div>
-
         <!-- Financial Dashboard -->
         <div class="grid grid-cols-2 gap-3">
             <div class="bg-emerald-800 p-3 rounded-xl shadow-md border border-emerald-500 text-center">
@@ -499,18 +487,6 @@
             let upiUrl = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(ACCOUNT_NAME)}&cu=INR`;
             window.location.href = upiUrl;
         }
-
-        // Auto Banner Slider (6 Seconds Timer)
-        const slider = document.getElementById('bannerSlider');
-        setInterval(() => {
-            if (slider) {
-                if (slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth) - 1) {
-                    slider.scrollLeft = 0;
-                } else {
-                    slider.scrollLeft += slider.clientWidth;
-                }
-            }
-        }, 6000);
 
         function openDonorsModal() { document.getElementById('donorsModal').classList.remove('hidden'); }
         function closeDonorsModal() { document.getElementById('donorsModal').classList.add('hidden'); }
