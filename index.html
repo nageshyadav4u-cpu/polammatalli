@@ -6,59 +6,65 @@
     <title>శ్రీ బురగాన పోలమ్మ గ్రామదేవత సంబరాలు</title>
     <!-- Tailwind CSS Script -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Ramabhadra&display=swap" rel="stylesheet">
+    <!-- Google Fonts for Telugu Text -->
+    <link href="https://fonts.googleapis.com/css2?family=Ramabhadra&family=Suranna&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Ramabhadra', sans-serif;
             background-color: #5B0606; /* Deep Maroon */
         }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        .locked-content {
-            filter: blur(6px);
-            pointer-events: none;
-            user-select: none;
+        .title-font {
+            font-family: 'Suranna', serif;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
 <body class="text-white min-h-screen flex flex-col items-center antialiased">
 
     <!-- Header Section -->
-    <header class="w-full max-w-md bg-[#420202] py-3 px-3 sticky top-0 z-40 shadow-xl border-b-2 border-amber-500 overflow-hidden">
-        
-        <!-- TOP LIVE DATE AND TIME DISPLAY -->
-        <div class="w-full flex justify-between items-center text-[11px] font-bold mb-2 gap-1">
-            <div class="bg-[#240101] text-amber-300 py-1 px-2.5 rounded-lg border border-amber-500/30 flex items-center gap-2 shadow-inner">
-                <span class="flex items-center gap-1">📅 <span id="topLiveDate">--/--/----</span></span>
-                <span class="flex items-center gap-1 text-emerald-400 font-extrabold">🕒 <span id="topLiveTime">--:--:-- --</span></span>
+    <header class="w-full max-w-md bg-[#420202] py-3 px-3 sticky top-0 z-40 shadow-xl border-b-2 border-amber-500">
+        <div class="flex items-center justify-between gap-2">
+            <!-- Left Side Image Icon -->
+            <img src="https://tse3.mm.bing.net/th/id/OIP.GHKAc28CK4ar36hNLE-uvwHaHa?r=0&w=2500&h=2500&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Icon" class="w-10 h-10 rounded-full object-cover shrink-0 border border-amber-400 shadow-md">
+            
+            <!-- Title Container -->
+            <div class="text-center flex-1">
+                <h1 class="title-font text-xl sm:text-2xl font-black bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] leading-tight">
+                    శ్రీశ్రీశ్రీ బురగాన పోలమ్మ తల్లి సంబరాలు
+                </h1>
+                <p class="text-sm font-bold text-amber-300 tracking-wider mt-0.5 drop-shadow">
+                    బూరగాం-2027
+                </p>
             </div>
-
-            <button onclick="openViewersModal()" class="bg-[#240101] hover:bg-[#3b0202] active:scale-95 transition py-1 px-2.5 rounded-lg border border-amber-500/30 flex items-center gap-1.5 shadow-inner cursor-pointer text-amber-200">
-                <span class="relative flex h-2 w-2">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span class="text-xs font-bold text-amber-200 flex items-center gap-1">
-                    <span>👁️</span> <span id="liveViewerCount" class="text-emerald-400 font-extrabold text-xs">1</span>
-                </span>
-            </button>
-        </div>
-
-        <!-- TEXT HEADER TITLE -->
-        <div class="text-center py-1">
-            <h1 class="text-amber-300 font-black text-lg sm:text-xl tracking-wide drop-shadow-md">
-                శ్రీశ్రీశ్రీ బురగాన పోలమ్మ తల్లి సంబరాలు - 2027
-            </h1>
+            
+            <!-- Right Side Image Icon -->
+            <img src="https://tse3.mm.bing.net/th/id/OIP.GHKAc28CK4ar36hNLE-uvwHaHa?r=0&w=2500&h=2500&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Icon" class="w-10 h-10 rounded-full object-cover shrink-0 border border-amber-400 shadow-md">
         </div>
     </header>
 
     <!-- Main Content Container -->
-    <main id="mainContainerApp" class="w-full max-w-md px-4 py-4 space-y-4 flex-grow pb-16 locked-content">
+    <main class="w-full max-w-md px-4 py-4 space-y-6 flex-grow pb-16">
 
-        <!-- Dashboard -->
-        <div class="grid grid-cols-2 gap-3 pt-1">
+        <!-- Banner Image Section -->
+        <div class="w-full h-48 bg-gradient-to-br from-yellow-700 to-amber-900 rounded-xl overflow-hidden border-2 border-yellow-500 relative shadow-xl shadow-black/30">
+            <div id="bannerSlider" class="flex w-full h-full overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar">
+                <div class="w-full h-full shrink-0 snap-center">
+                    <img src="https://scontent.fvtz6-1.fna.fbcdn.net/v/t39.30808-6/749355805_1462183655959232_4955794868753677832_n.jpg?stp=dst-jpg_tt6&cstp=mx1774x887&ctp=s1774x887&_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_ohc=XCw0FqmtpqQQ7kNvwE_3OTz&_nc_oc=Adrl-ltN9kGs7zMtqSk_EMq_UWM2h5WesGTt62KrijAEB1ZPnnKCRHRxOnhtmKY54ntMQAHj1EVsKTVkjTAk3E3H&_nc_zt=23&_nc_ht=scontent.fvtz6-1.fna&_nc_gid=a2o958xyjVGXbj83_I0zVw&_nc_ss=7b2a8&oh=00_AQA8GanUDozMO83q-rMZB7m25LL6KAxcLERki77LtNdmGg&oe=6A6110DE" alt="Banner 1" class="w-full h-full object-cover">
+                </div>
+                <div class="w-full h-full shrink-0 snap-center">
+                    <img src="https://scontent.fvtz6-1.fna.fbcdn.net/v/t39.30808-6/750463920_1462202115957386_1084127353928691562_n.jpg?stp=dst-jpg_tt6&cstp=mx1536x1024&ctp=s1536x1024&_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=mr3K0UV3c6gQ7kNvwGkEuPB&_nc_oc=Ado_-nqf5uWz4iWGDvkP_6apYbU7N_89eETMIGFgZVoxvGazuIWf0svD7eAkdUIELboAlkl_5xJX6e0FEYO3-plZ&_nc_zt=23&_nc_ht=scontent.fvtz6-1.fna&_nc_gid=pZc5ZW-3KQw8ZWBNYzxsVw&_nc_ss=7b2a8&oh=00_AQAU0YDaWS_jvK7SQcPzZE-c_KCXIZPS7YKuNwJe1N0bHQ&oe=6A610989" alt="Banner 2" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="grid grid-cols-2 gap-3">
             <div class="bg-emerald-800 p-3 rounded-xl shadow-md border border-emerald-500 text-center">
                 <p class="text-xs text-emerald-100">మొత్తం వసూళ్లు</p>
                 <p id="dashDonations" class="text-lg font-bold mt-0.5 text-white">₹0/-</p>
@@ -69,19 +75,22 @@
             </div>
         </div>
         
+        <!-- Balance Row -->
         <div class="w-full bg-[#facc15] text-stone-950 p-3 rounded-xl text-center font-bold border-2 border-amber-400 shadow-lg">
             <span class="text-xs font-bold uppercase tracking-wider block opacity-90">💥 కమిటీ వద్ద మిగిలివున్న నికర డబ్బులు 💥</span>
             <span id="dashBalance" class="text-2xl font-black text-red-900">₹0/-</span>
         </div>
 
-        <button onclick="payViaUPI()" class="w-full bg-gradient-to-r from-emerald-500 via-green-600 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 text-white font-black text-lg py-4 px-4 rounded-xl shadow-xl border-2 border-emerald-300 transition transform active:scale-98 flex justify-between items-center cursor-pointer animate-pulse">
+        <!-- DONATE HERE BUTTON (Highlighted Prominently) -->
+        <button onclick="openDonateModal()" class="w-full bg-gradient-to-r from-emerald-500 via-green-600 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 text-white font-black text-lg py-4 px-4 rounded-xl shadow-xl border-2 border-emerald-300 transition transform active:scale-98 flex justify-between items-center cursor-pointer animate-pulse">
             <span class="flex items-center gap-2">
                 <span class="text-2xl">🙏</span>
                 <span>విరాళం ఇవ్వండి (Donate Here)</span>
             </span>
-            <span class="bg-white text-emerald-900 text-xs px-2.5 py-1 rounded-full font-extrabold shadow">Pay with UPI ➔</span>
+            <span class="bg-white text-emerald-900 text-xs px-2.5 py-1 rounded-full font-extrabold shadow">UPI / Bank ➔</span>
         </button>
 
+        <!-- Action Buttons -->
         <div class="space-y-3">
             <button onclick="openDonorsModal()" class="w-full bg-amber-500 hover:bg-amber-600 font-bold py-3.5 px-4 rounded-xl shadow-md transition flex justify-between items-center text-stone-900 cursor-pointer">
                 <span>🤝 దాతల వివరాలు చూడండి</span>
@@ -93,14 +102,13 @@
                 <span>➔</span>
             </button>
 
+            <!-- Committee Members Button -->
             <button onclick="openCommitteeModal()" class="w-full bg-amber-500 hover:bg-amber-600 font-bold py-3.5 px-4 rounded-xl shadow-md transition flex justify-between items-center text-stone-900 cursor-pointer">
-                <span class="flex items-center gap-1.5">
-                    <span>👥 కులాల వారీగా కమిటీ సభ్యులు</span>
-                    <span class="bg-stone-900 text-amber-300 text-xs px-2 py-0.5 rounded-full font-black ml-1 border border-amber-400" id="btnCommitteeCount">0</span>
-                </span>
+                <span>👥 కమిటీ సభ్యుల వివరాలు (కులాల వారీగా)</span>
                 <span>➔</span>
             </button>
 
+            <!-- Facebook Link Banner Button -->
             <a href="https://www.facebook.com/share/17Zm5EKbV6/" target="_blank" rel="noopener noreferrer" class="w-full bg-blue-600 hover:bg-blue-700 font-bold py-3.5 px-4 rounded-xl shadow-md transition flex justify-between items-center text-white cursor-pointer">
                 <span class="flex items-center gap-2">
                     <svg class="w-5 h-5 fill-white" viewBox="0 0 24 24">
@@ -110,106 +118,83 @@
                 </span>
                 <span>➔</span>
             </a>
-
-            <!-- BUTTON: ఆవేటి వారాలు 2026 లెక్కలు -->
-            <button onclick="openAvetiModal()" class="w-full bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:to-yellow-600 text-stone-950 font-black text-base py-3 px-4 rounded-xl shadow-lg border-2 border-yellow-300 transition transform active:scale-98 flex justify-between items-center cursor-pointer">
-                <span class="flex items-center gap-2">
-                    <span class="text-xl">🪔</span>
-                    <span>ఆవేటి వారాలు 2026 లెక్కలు</span>
-                </span>
-                <span class="bg-stone-950 text-yellow-400 text-xs px-2.5 py-1 rounded-full font-bold shadow">వివరాలు ➔</span>
-            </button>
         </div>
 
+        <!-- Dynamic Daily Updates Section -->
         <div class="space-y-3">
             <h2 class="text-lg font-bold text-yellow-400 flex items-center gap-2">
                 <span>📅</span> రోజువారీ అప్డేట్స్
             </h2>
-            <div id="updatesListContainer" class="space-y-3 max-h-[440px] overflow-y-auto pr-1"></div>
+            <div id="updatesListContainer" class="space-y-3"></div>
         </div>
     </main>
 
     <!-- Modals -->
 
-    <!-- POPUP 1: FORCED REGISTRATION FOR NEW USERS -->
-    <div id="namePromptModal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-        <div class="bg-stone-900 text-white rounded-2xl w-full max-w-xs p-5 shadow-2xl border-2 border-yellow-500 text-center space-y-3">
-            <div class="text-3xl">🙏</div>
-            <h3 class="text-base font-bold text-yellow-400 leading-snug">
-                శ్రీ బురగాన పోలమ్మ సంబరాల వెబ్‌సైట్
-            </h3>
-            <p class="text-xs text-stone-300">
-                వెబ్‌సైట్ వీక్షించడానికి కొత్త యూజర్లు మీ వివరాలు నమోదు చేయండి:
-            </p>
-            <input type="text" id="viewerNameInput" placeholder="మీ పూర్తి పేరు..." class="w-full bg-stone-800 text-amber-200 border border-yellow-500/60 rounded-xl px-3 py-2 text-xs font-bold text-center focus:outline-none focus:border-yellow-400">
-            <input type="tel" id="viewerPhoneInput" maxlength="10" placeholder="10 అంకెల మొబైల్ నంబర్..." class="w-full bg-stone-800 text-amber-200 border border-yellow-500/60 rounded-xl px-3 py-2 text-xs font-bold text-center focus:outline-none focus:border-yellow-400">
-            <button onclick="submitViewerDetails()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-stone-950 font-black py-2.5 rounded-xl shadow-lg transition active:scale-95 cursor-pointer text-xs">
-                ప్రవేశించండి (Enter) ➔
-            </button>
-        </div>
-    </div>
-
-    <!-- POPUP 3: REGISTERED VIEWERS LIST MODAL -->
-    <div id="viewersModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-4 border-b flex justify-between items-center bg-emerald-700 text-white">
-                <h3 class="font-bold text-base flex items-center gap-2">
-                    <span>👁️</span> రిజిస్టర్డ్ వీక్షకుల వివరాలు
-                </h3>
-                <button onclick="closeViewersModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
-            </div>
-            <div class="p-3 bg-emerald-50 border-b border-emerald-200 text-xs text-emerald-900 font-bold flex justify-between items-center">
-                <span>మొత్తం వీక్షకులు:</span>
-                <span id="modalViewersTotalCount" class="bg-emerald-700 text-white px-2 py-0.5 rounded-full text-xs font-black">0</span>
-            </div>
-            <div id="viewersListContainer" class="p-4 overflow-y-auto flex-grow space-y-2 text-xs"></div>
-        </div>
-    </div>
-
-    <!-- AVETI MODAL -->
-    <div id="avetiModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white">
+    <!-- Donate Bank Details Modal -->
+    <div id="donateModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl flex flex-col">
+            <div class="p-4 bg-emerald-800 text-white flex justify-between items-center">
                 <h3 class="font-bold text-lg flex items-center gap-2">
-                    <span>🪔</span> ఆవేటి వారాలు 2026 లెక్కలు
+                    <span>💳</span> బ్యాంక్ & UPI వివరాలు
                 </h3>
-                <button onclick="closeAvetiModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
+                <button onclick="closeDonateModal()" class="text-2xl font-bold leading-none cursor-pointer">&times;</button>
             </div>
-
-            <div class="p-3 bg-amber-50 border-b border-amber-200 grid grid-cols-3 gap-2 text-center text-xs">
-                <div class="bg-emerald-100 border border-emerald-300 p-2 rounded-lg">
-                    <p class="text-[10px] text-emerald-800 font-bold">వసూళ్లు</p>
-                    <p id="avetiTotalCol" class="font-black text-emerald-700 mt-0.5">₹0/-</p>
-                </div>
-                <div class="bg-red-100 border border-red-300 p-2 rounded-lg">
-                    <p class="text-[10px] text-red-800 font-bold">ఖర్చులు</p>
-                    <p id="avetiTotalExp" class="font-black text-red-700 mt-0.5">₹0/-</p>
-                </div>
-                <div class="bg-yellow-100 border border-yellow-300 p-2 rounded-lg">
-                    <p class="text-[10px] text-yellow-900 font-bold">నిల్వ</p>
-                    <p id="avetiBalance" class="font-black text-amber-900 mt-0.5">₹0/-</p>
-                </div>
-            </div>
-
-            <div class="p-4 overflow-y-auto flex-grow space-y-4 text-xs">
-                <div>
-                    <h4 class="font-bold text-emerald-800 text-sm border-b-2 border-emerald-600 pb-1 mb-2 flex items-center justify-between">
-                        <span>🤝 వసూళ్ల వివరాలు</span>
-                    </h4>
-                    <div id="avetiDonationsContainer" class="space-y-2"></div>
+            
+            <div class="p-5 space-y-4 text-sm">
+                <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center">
+                    <p class="text-xs text-emerald-800 font-bold">శ్రీ బురగాన పోలమ్మ తల్లి సంబరాల నిధికి మీ విరాళం సమర్పించండి</p>
                 </div>
 
-                <div>
-                    <h4 class="font-bold text-red-800 text-sm border-b-2 border-red-600 pb-1 mb-2 flex items-center justify-between">
-                        <span>📊 ఖర్చుల వివరాలు</span>
-                    </h4>
-                    <div id="avetiExpensesContainer" class="space-y-2"></div>
+                <!-- UPI ID Section -->
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs space-y-1 text-center">
+                    <span class="text-stone-500 font-bold block text-[10px]">UPI ID:</span>
+                    <div class="flex justify-center items-center gap-2">
+                        <span class="font-black text-amber-900 text-sm font-mono tracking-wide">8143765300@cnrb</span>
+                        <button onclick="copyToClipboard('8143765300@cnrb')" class="bg-amber-200 hover:bg-amber-300 text-amber-900 font-bold px-2 py-0.5 rounded text-[10px] cursor-pointer">
+                            📋 కాపీ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bank Account Details Card -->
+                <div class="bg-stone-50 border border-stone-200 rounded-xl p-3.5 space-y-2.5 text-xs">
+                    <div>
+                        <span class="text-stone-500 font-bold block text-[10px]">బ్యాంక్ పేరు (Bank Name):</span>
+                        <span class="font-black text-stone-900 text-sm">CANARA BANK (కెనరా బ్యాంక్)</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <div>
+                            <span class="text-stone-500 font-bold block text-[10px]">ఖాతా నంబర్ (Account Number):</span>
+                            <span class="font-black text-emerald-700 text-sm font-mono tracking-wider">5737101006411</span>
+                        </div>
+                        <button onclick="copyToClipboard('5737101006411')" class="bg-stone-200 hover:bg-stone-300 text-stone-800 font-bold px-2 py-1 rounded text-[10px] cursor-pointer">
+                            📋 కాపీ
+                        </button>
+                    </div>
+
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <div>
+                            <span class="text-stone-500 font-bold block text-[10px]">IFSC కోడ్ (IFSC Code):</span>
+                            <span class="font-black text-stone-900 text-sm font-mono">CNRB0005737</span>
+                        </div>
+                        <button onclick="copyToClipboard('CNRB0005737')" class="bg-stone-200 hover:bg-stone-300 text-stone-800 font-bold px-2 py-1 rounded text-[10px] cursor-pointer">
+                            📋 కాపీ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick UPI Pay Button Section -->
+                <div class="space-y-2 pt-1">
+                    <button onclick="payViaUPI()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition flex justify-center items-center gap-2 cursor-pointer text-sm">
+                        <span>📲</span> UPI యాప్‌తో చెల్లించండి (GPay/PhonePe)
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- DONORS MODAL -->
     <div id="donorsModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl">
             <div class="p-4 border-b flex justify-between items-center bg-emerald-700 text-white rounded-t-2xl">
@@ -220,7 +205,6 @@
         </div>
     </div>
 
-    <!-- EXPENSES MODAL -->
     <div id="expensesModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl">
             <div class="p-4 border-b flex justify-between items-center bg-red-700 text-white rounded-t-2xl">
@@ -231,31 +215,17 @@
         </div>
     </div>
 
-    <!-- COMMITTEE MEMBERS MODAL (COMMUNITY / CASTE WISE SEPARATED) -->
+    <!-- Committee Members Modal (Caste-wise: Name, Phone) -->
     <div id="committeeModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-md max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white rounded-t-2xl shrink-0">
-                <h3 class="font-bold text-base flex items-center gap-1.5">
-                    <span>👥 కులాల వారీగా కమిటీ సభ్యులు</span>
-                    <span class="bg-amber-900 text-yellow-300 text-xs px-2 py-0.5 rounded-full font-black border border-yellow-300/50" id="modalCommitteeCount">0</span>
-                </h3>
+        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl">
+            <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white rounded-t-2xl">
+                <h3 class="font-bold text-lg">👥 కమిటీ సభ్యుల వివరాలు</h3>
                 <button onclick="closeCommitteeModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
             </div>
-
-            <!-- Overall Meeting Attendance Summary Bar -->
-            <div class="p-3 bg-amber-50 border-b border-amber-200 shrink-0">
-                <p class="text-[11px] font-black text-amber-900 mb-1.5 flex items-center gap-1">
-                    <span>📌</span> మీటింగ్‌ల హాజరు సారాంశం:
-                </p>
-                <div id="meetingAttendanceSummaryContainer" class="flex gap-2 overflow-x-auto pb-1 no-scrollbar text-xs"></div>
-            </div>
-
-            <!-- Caste-wise Separated Members List Container -->
             <div id="committeeListContainer" class="p-4 overflow-y-auto flex-grow space-y-4"></div>
         </div>
     </div>
 
-    <!-- UPDATES MODAL -->
     <div id="updatesModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden max-h-[85vh] flex flex-col">
             <div class="p-4 bg-red-800 text-white flex justify-between items-center shrink-0">
@@ -273,121 +243,26 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Data Sync Logic -->
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOky57nxfks4jI243SMLKOH-4a_LB19XmjtYSaYEQNo7z40hKc8l-gkch_e8THyuiz/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-Mh32u9ES50TLHAiu_AHj5JGQXQ-_YJm_CnObF9mGxAU8eFSLoU80ltKcyAXGC3Ti/exec";
 
         const UPI_ID = "8143765300@cnrb"; 
         const ACCOUNT_NAME = "Sri Buragana Polamma Sambaralu";
 
-        function updateLiveHeaderClock() {
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('en-GB'); 
-            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-
-            const dElem = document.getElementById('topLiveDate');
-            const tElem = document.getElementById('topLiveTime');
-
-            if (dElem) dElem.innerText = dateStr;
-            if (tElem) tElem.innerText = timeStr;
-        }
-
-        setInterval(updateLiveHeaderClock, 1000);
-
-        let activeViewersList = [];
-
-        function checkViewerDetailsPrompt() {
-            let savedName = localStorage.getItem('polamma_viewer_name');
-            let savedPhone = localStorage.getItem('polamma_viewer_phone');
-            
-            if (!savedName || !savedPhone) {
-                document.getElementById('namePromptModal').classList.remove('hidden');
-                document.getElementById('mainContainerApp').classList.add('locked-content');
-            } else {
-                document.getElementById('namePromptModal').classList.add('hidden');
-                document.getElementById('mainContainerApp').classList.remove('locked-content');
-                initViewerSession(savedName, savedPhone);
-            }
-        }
-
-        function submitViewerDetails() {
-            let nameInput = document.getElementById('viewerNameInput').value.trim();
-            let phoneInput = document.getElementById('viewerPhoneInput').value.trim();
-
-            if (nameInput !== "" && phoneInput.length === 10) {
-                localStorage.setItem('polamma_viewer_name', nameInput);
-                localStorage.setItem('polamma_viewer_phone', phoneInput);
-                
-                document.getElementById('namePromptModal').classList.add('hidden');
-                document.getElementById('mainContainerApp').classList.remove('locked-content');
-                
-                initViewerSession(nameInput, phoneInput);
-            } else {
-                alert("దయచేసి సరైన పేరు మరియు 10 అంకెల ఫోన్ నంబర్ ఎంటర్ చేయండి.");
-            }
-        }
-
-        function initViewerSession(userName, userPhone) {
-            activeViewersList = [{ name: userName + " (మీరు - రిజిస్టర్డ్)", phone: userPhone, isSelf: true }];
-            updateViewerCounterUI();
-        }
-
-        function updateViewerCounterUI() {
-            const countElem = document.getElementById('liveViewerCount');
-            if (countElem) countElem.innerText = activeViewersList.length;
-        }
-
-        function openViewersModal() {
-            let savedName = localStorage.getItem('polamma_viewer_name');
-            if (!savedName) {
-                alert("దయచేసి ముందుగా మీ పేరు మరియు ఫోన్ నంబర్ నమోదు చేయండి.");
-                checkViewerDetailsPrompt();
-                return;
-            }
-
-            const listContainer = document.getElementById('viewersListContainer');
-            const totalElem = document.getElementById('modalViewersTotalCount');
-            
-            totalElem.innerText = `${activeViewersList.length} మంది`;
-
-            if (activeViewersList.length > 0) {
-                listContainer.innerHTML = activeViewersList.map((v, idx) => `
-                    <div class="flex justify-between items-center p-2 rounded-lg border ${v.isSelf ? 'bg-amber-50 border-amber-300 text-amber-900' : 'bg-stone-50 border-stone-200 text-stone-800'}">
-                        <div class="flex flex-col">
-                            <span class="font-bold flex items-center gap-1.5 text-xs">
-                                <span>${v.isSelf ? '⭐' : '👤'}</span>
-                                <span>${idx + 1}. ${v.name}</span>
-                            </span>
-                            <span class="text-[10px] text-stone-500 pl-5 font-semibold">📞 ${v.phone}</span>
-                        </div>
-                        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1 shrink-0">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> రిజిస్టర్డ్
-                        </span>
-                    </div>
-                `).join('');
-            } else {
-                listContainer.innerHTML = '<p class="text-stone-500 text-center py-2">ఎవరూ అందుబాటులో లేరు</p>';
-            }
-
-            document.getElementById('viewersModal').classList.remove('hidden');
-        }
-
-        function closeViewersModal() {
-            document.getElementById('viewersModal').classList.add('hidden');
-        }
-
-        const CASTE_COLOR_THEMES = [
-            { bg: "bg-amber-50", border: "border-amber-300", header: "text-amber-900 border-amber-200" },
-            { bg: "bg-blue-50", border: "border-blue-300", header: "text-blue-900 border-blue-200" },
-            { bg: "bg-emerald-50", border: "border-emerald-300", header: "text-emerald-900 border-emerald-200" }
-        ];
-
-        let database = { donations: [], expenses: [], updates: [], committee: [], committeeMeetingSummaries: [], avetiDonations: [], avetiExpenses: [] };
+        let database = {
+            donations: [],
+            expenses: [],
+            updates: [],
+            committee: []
+        };
 
         function parseDate(dateStr) {
             if(!dateStr) return new Date(0);
             let parts = String(dateStr).split('/');
-            if(parts.length === 3) return new Date(parts[2], parts[1] - 1, parts[0]);
+            if(parts.length === 3) {
+                return new Date(parts[2], parts[1] - 1, parts[0]);
+            }
             return new Date(dateStr);
         }
 
@@ -400,17 +275,7 @@
                     database.donations = data.donations || [];
                     database.expenses = data.expenses || [];
                     database.updates = data.updates || [];
-                    
-                    if (data.committee && data.committee.members) {
-                        database.committee = data.committee.members || [];
-                        database.committeeMeetingSummaries = data.committee.meetingSummaries || [];
-                    } else {
-                        database.committee = data.committee || [];
-                        database.committeeMeetingSummaries = [];
-                    }
-
-                    database.avetiDonations = data.avetiDonations || [];
-                    database.avetiExpenses = data.avetiExpenses || [];
+                    database.committee = data.committee || [];
                 }
                 updateDashboard();
             } catch (err) {
@@ -428,7 +293,6 @@
             document.getElementById('dashBalance').innerText = `₹${netBalance.toLocaleString('en-IN')}/-`;
 
             renderLists();
-            renderAvetiData();
         }
 
         function renderLists() {
@@ -452,18 +316,17 @@
                 </div>
             `).join('') : '<p class="text-stone-500 text-center py-2 text-sm">వివరాలు లేవు</p>';
 
-            // Render Separate Committee Logic (Community / Caste-wise)
             renderCommitteeList();
 
             let sortedUpdates = [...database.updates].sort((a, b) => parseDate(b.date) - parseDate(a.date));
 
             document.getElementById('updatesListContainer').innerHTML = sortedUpdates.length > 0 ? sortedUpdates.map((item, index) => {
                 return `
-                <div onclick="openUpdateModalByIndex(${index})" class="bg-white text-stone-900 p-3.5 rounded-xl shadow border-l-4 border-yellow-500 flex justify-between items-center cursor-pointer hover:bg-stone-50 transition">
+                <div onclick="openUpdateModalByIndex(${index})" class="bg-white text-stone-900 p-4 rounded-xl shadow border-l-4 border-yellow-500 flex justify-between items-center cursor-pointer hover:bg-stone-50 transition">
                     <div class="flex-1">
-                        <span class="text-[10px] text-red-700 font-bold block mb-0.5">📅 ${item.date}</span>
+                        <span class="text-[10px] text-red-700 font-bold block mb-0.5">${item.date}</span>
                         <h3 class="font-bold text-sm text-stone-800 leading-snug">${item.title}</h3>
-                        <span class="inline-block mt-1.5 text-[10px] bg-red-50 text-red-700 px-2 py-0.5 rounded font-bold border border-red-100">సమాచారం & ఫోటోలు ➔</span>
+                        <span class="inline-block mt-2 text-[10px] bg-red-50 text-red-700 px-2 py-0.5 rounded font-bold border border-red-100">సమాచారం & ఫోటోలు ➔</span>
                     </div>
                     ${item.image1 ? `
                     <div class="w-12 h-12 rounded-lg overflow-hidden shrink-0 ml-2 shadow-inner">
@@ -473,63 +336,13 @@
             `}).join('') : '<p class="text-yellow-200 text-center py-2 text-sm">అప్‌డేట్స్ లేవు</p>';
         }
 
-        function renderAvetiData() {
-            let totalCol = database.avetiDonations.reduce((sum, item) => sum + Number(item.amount || 0), 0);
-            let totalExp = database.avetiExpenses.reduce((sum, item) => sum + Number(item.amount || 0), 0);
-            let bal = totalCol - totalExp;
-
-            document.getElementById('avetiTotalCol').innerText = `₹${totalCol.toLocaleString('en-IN')}/-`;
-            document.getElementById('avetiTotalExp').innerText = `₹${totalExp.toLocaleString('en-IN')}/-`;
-            document.getElementById('avetiBalance').innerText = `₹${bal.toLocaleString('en-IN')}/-`;
-
-            document.getElementById('avetiDonationsContainer').innerHTML = database.avetiDonations.length > 0 ? database.avetiDonations.map((item, idx) => `
-                <div class="flex justify-between items-center border-b pb-1 text-stone-800">
-                    <div>
-                        <p class="font-bold">${idx + 1}. ${item.text}</p>
-                        <p class="text-[9px] text-stone-500">📅 ${item.date}</p>
-                    </div>
-                    <span class="font-bold text-emerald-600">₹${Number(item.amount).toLocaleString('en-IN')}/-</span>
-                </div>
-            `).join('') : '<p class="text-stone-400 text-center py-1">వివరాలు లేవు</p>';
-
-            document.getElementById('avetiExpensesContainer').innerHTML = database.avetiExpenses.length > 0 ? database.avetiExpenses.map((item, idx) => `
-                <div class="flex justify-between items-center border-b pb-1 text-stone-800">
-                    <div>
-                        <p class="font-bold">${idx + 1}. ${item.text}</p>
-                        <p class="text-[9px] text-stone-500">📅 ${item.date}</p>
-                    </div>
-                    <span class="font-bold text-red-600">₹${Number(item.amount).toLocaleString('en-IN')}/-</span>
-                </div>
-            `).join('') : '<p class="text-stone-400 text-center py-1">వివరాలు లేవు</p>';
-        }
-
-        // --- SEPARATE COMMITTEE MEMBERS LOGIC (COMMUNITY WISE, PHONE, CALL, WHATSAPP & ATTENDANCE) ---
         function renderCommitteeList() {
             const container = document.getElementById('committeeListContainer');
-            const summaryContainer = document.getElementById('meetingAttendanceSummaryContainer');
-            
-            const totalMembers = database.committee ? database.committee.length : 0;
-            
-            document.getElementById('btnCommitteeCount').innerText = `${totalMembers} మంది`;
-            document.getElementById('modalCommitteeCount').innerText = `${totalMembers} మంది`;
-
-            if (database.committeeMeetingSummaries && database.committeeMeetingSummaries.length > 0) {
-                summaryContainer.innerHTML = database.committeeMeetingSummaries.map(s => `
-                    <div class="bg-white border border-amber-300 px-2.5 py-1 rounded-lg shrink-0 text-center shadow-xs">
-                        <span class="block text-[9px] font-bold text-stone-500">📅 ${s.date}</span>
-                        <span class="text-xs font-extrabold text-emerald-700">${s.attended} / ${s.total} హాజరు</span>
-                    </div>
-                `).join('');
-            } else {
-                summaryContainer.innerHTML = '<span class="text-[10px] text-stone-500">మీటింగ్ వివరాలు లేవు</span>';
-            }
-
             if (!database.committee || database.committee.length === 0) {
                 container.innerHTML = '<p class="text-stone-500 text-center py-2 text-sm">కమిటీ వివరాలు ఇంకా నమోదు చేయలేదు</p>';
                 return;
             }
 
-            // Grouping by Caste / Community
             const grouped = {};
             database.committee.forEach(item => {
                 const caste = item.caste && item.caste.trim() !== "" ? item.caste.trim() : 'ఇతర సభ్యులు';
@@ -538,55 +351,23 @@
             });
 
             let html = '';
-            let colorIndex = 0;
-
             for (const caste in grouped) {
-                const theme = CASTE_COLOR_THEMES[colorIndex % CASTE_COLOR_THEMES.length];
-                colorIndex++;
-
                 html += `
-                    <div class="${theme.bg} rounded-xl p-3 border ${theme.border} shadow-sm">
-                        <h4 class="font-bold ${theme.header} text-sm border-b pb-1 mb-2 flex items-center justify-between">
-                            <span class="flex items-center gap-1.5">🚩 ${caste}</span>
-                            <span class="text-[10px] bg-white/80 font-bold px-2 py-0.5 rounded-full border border-stone-200">${grouped[caste].length} సభ్యులు</span>
+                    <div class="bg-amber-50 rounded-xl p-3 border border-amber-200 shadow-xs">
+                        <h4 class="font-bold text-amber-900 text-sm border-b border-amber-200 pb-1 mb-2 flex items-center gap-1.5">
+                            <span>🚩</span> ${caste}
                         </h4>
-                        <div class="space-y-3">
-                            ${grouped[caste].map((member, idx) => {
-                                const cleanPhone = member.phone ? String(member.phone).replace(/[^0-9]/g, '') : '';
-                                const attSummary = member.attendanceSummary || '0/0';
-                                const datesList = member.dateWiseAttendance || [];
-                                
-                                return `
-                                <div class="border-b border-stone-200/70 pb-2 bg-white p-2.5 rounded-lg shadow-2xs">
-                                    <div class="flex justify-between items-start text-xs text-stone-800 gap-1">
-                                        <div class="flex flex-col">
-                                            <span class="font-bold text-stone-900">${idx + 1}. ${member.name}</span>
-                                            <span class="text-[10px] text-stone-500 font-semibold mt-0.5">📞 ${member.phone || 'నంబర్ లేదు'}</span>
-                                            <span class="text-[10px] text-stone-600 mt-0.5">హాజరు: <b class="text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded font-black">${attSummary}</b></span>
-                                        </div>
-                                        ${cleanPhone !== "" ? `
-                                            <div class="flex items-center gap-1.5 shrink-0 pt-1">
-                                                <a href="tel:${cleanPhone}" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-xs transition" title="డైరెక్ట్ కాల్ చేయండి">
-                                                    📞 Call
-                                                </a>
-                                                <a href="https://wa.me/91${cleanPhone}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-xs transition" title="వాట్సాప్ చాట్ చేయండి">
-                                                    💬 Chat
-                                                </a>
-                                            </div>
-                                        ` : ''}
-                                    </div>
-
-                                    ${datesList.length > 0 ? `
-                                        <div class="flex flex-wrap gap-1 mt-2 pt-1.5 border-t border-dashed border-stone-200">
-                                            ${datesList.map(d => `
-                                                <span class="text-[9px] px-1.5 py-0.5 rounded font-bold ${d.status === 'P' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-red-100 text-red-700 border border-red-200'}">
-                                                    📅 ${d.date}: <b>${d.status === 'P' ? '☑️ హాజరు' : '⬜ రాలేదు'}</b>
-                                                </span>
-                                            `).join('')}
-                                        </div>
-                                    ` : ''}
+                        <div class="space-y-2">
+                            ${grouped[caste].map((member, idx) => `
+                                <div class="flex justify-between items-center text-xs text-stone-800 border-b border-amber-100/60 pb-1">
+                                    <span class="font-bold text-stone-900">${idx + 1}. ${member.name}</span>
+                                    ${member.phone && member.phone !== "undefined" && member.phone !== "" ? `
+                                        <a href="tel:${member.phone}" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-xs">
+                                            📞 ${member.phone}
+                                        </a>
+                                    ` : '<span class="text-stone-400 text-[10px]">-</span>'}
                                 </div>
-                                `}).join('')}
+                            `).join('')}
                         </div>
                     </div>
                 `;
@@ -623,13 +404,34 @@
             document.getElementById('updatesModal').classList.remove('hidden');
         }
 
+        // Donate & Copy Functions
+        function openDonateModal() { document.getElementById('donateModal').classList.remove('hidden'); }
+        function closeDonateModal() { document.getElementById('donateModal').classList.add('hidden'); }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`కాపీ చేయబడింది: ${text}`);
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
         function payViaUPI() {
             let upiUrl = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(ACCOUNT_NAME)}&cu=INR`;
             window.location.href = upiUrl;
         }
 
-        function openAvetiModal() { document.getElementById('avetiModal').classList.remove('hidden'); }
-        function closeAvetiModal() { document.getElementById('avetiModal').classList.add('hidden'); }
+        // Auto Banner Slider (6 Seconds)
+        const slider = document.getElementById('bannerSlider');
+        setInterval(() => {
+            if (slider) {
+                if (slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth) - 1) {
+                    slider.scrollLeft = 0;
+                } else {
+                    slider.scrollLeft += slider.clientWidth;
+                }
+            }
+        }, 6000);
 
         function openDonorsModal() { document.getElementById('donorsModal').classList.remove('hidden'); }
         function closeDonorsModal() { document.getElementById('donorsModal').classList.add('hidden'); }
@@ -643,18 +445,18 @@
         function closeUpdateModal() { document.getElementById('updatesModal').classList.add('hidden'); }
 
         window.onclick = function(event) {
-            if (event.target == document.getElementById('avetiModal')) closeAvetiModal();
+            if (event.target == document.getElementById('donateModal')) closeDonateModal();
             if (event.target == document.getElementById('donorsModal')) closeDonorsModal();
             if (event.target == document.getElementById('expensesModal')) closeExpensesModal();
             if (event.target == document.getElementById('committeeModal')) closeCommitteeModal();
             if (event.target == document.getElementById('updatesModal')) closeUpdateModal();
-            if (event.target == document.getElementById('viewersModal')) closeViewersModal();
         }
 
-        updateLiveHeaderClock();
-        checkViewerDetailsPrompt();
+        // 🔄 Initial Load
         fetchLiveData();
 
+        // 🔄 AUTO REFRESH LOGIC:
+        // ప్రతి 10 సెకన్లకు గూగుల్ షీట్ నుండి లేటెస్ట్ డేటాను ఆటోమేటిక్‌గా అప్‌డేట్ చేస్తుంది
         setInterval(() => {
             fetchLiveData();
         }, 10000);
