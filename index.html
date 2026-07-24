@@ -41,7 +41,7 @@
                   <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
                 <span class="text-xs font-bold text-amber-200 flex items-center gap-1">
-                    <span>👁️</span> <span id="liveViewerCount" class="text-emerald-400 font-extrabold text-xs">1</span>
+                    <span>👁️</span> <span id="liveViewerCount" class="text-emerald-400 font-extrabold text-xs">0</span>
                 </span>
             </button>
         </div>
@@ -62,24 +62,41 @@
             
             <div class="flex justify-between items-center border-b border-amber-900/30 pb-1.5">
                 <span class="font-extrabold text-sm flex items-center gap-1.5 text-stone-900">
-                    <span>📢</span> <span id="eventTitle">గ్రామ కమిటీ మీటింగ్ మరియు సంబరాల ఏర్పాట్లు</span>
+                    <span>📢</span> <span id="eventTitle">ఈవెంట్ వివరాలు లోడ్ అవుతున్నాయి...</span>
                 </span>
                 <span id="eventBadgeStatus" class="text-[10px] bg-stone-950 text-yellow-300 font-black px-2 py-0.5 rounded-full border border-yellow-400/40">ఈవెంట్ ప్రకటన</span>
             </div>
 
+            <!-- LIVE VIDEO STREAM CONTAINER -->
+            <div id="liveStreamWrapper" class="w-full rounded-xl overflow-hidden border-2 border-amber-400 shadow-md bg-black hidden">
+                <div class="relative w-full aspect-video">
+                    <iframe id="liveStreamIframe" src="" class="absolute top-0 left-0 w-full h-full border-0" allowfullscreen></iframe>
+                </div>
+                <div class="bg-red-700 text-white text-[10px] font-extrabold py-1 px-2 text-center animate-pulse flex items-center justify-center gap-1">
+                    <span class="w-2 h-2 rounded-full bg-white animate-ping"></span> ప్రత్యక్ష ప్రసారం (LIVE STREAMING)
+                </div>
+            </div>
+
             <div class="bg-stone-950 text-white p-2.5 rounded-lg border border-yellow-400/50 space-y-1.5 shadow-inner">
                 <div class="flex justify-between items-center text-xs font-bold text-amber-300">
-                    <span>📅 తేదీ: <b id="eventDate" class="text-white font-extrabold">24/07/2026</b></span>
-                    <span>⏰ సమయం: <b id="eventTime" class="text-emerald-400 font-extrabold">07:00 PM</b></span>
+                    <span>📅 తేదీ: <b id="eventDate" class="text-white font-extrabold">--/--/----</b></span>
+                    <span>⏰ సమయం: <b id="eventTime" class="text-emerald-400 font-extrabold">--:-- --</b></span>
                 </div>
                 <div class="text-[11px] font-bold text-amber-200/90 border-t border-stone-800 pt-1 flex items-center gap-1">
-                    <span>📍 స్థలం:</span> <span id="eventLocation" class="text-white font-extrabold">గ్రామ సచివాలయం దగ్గర</span>
+                    <span>📍 స్థలం:</span> <span id="eventLocation" class="text-white font-extrabold">--</span>
                 </div>
             </div>
 
             <p id="eventDetails" class="text-xs font-bold text-stone-900 leading-snug px-0.5 min-h-[1.5rem]">
-                గ్రామ దేవత శ్రీ బురగాన పోలమ్మ తల్లి సంబరాల ఏర్పాట్ల నిమిత్తం గ్రామ కమిటీ సభ్యులందరూ హాజరు కావాలని కోరడమైనది.
+                వివరాలు సేకరించబడుతున్నాయి...
             </p>
+
+            <div class="flex items-center justify-between bg-stone-950/90 text-amber-300 p-2 rounded-lg border border-yellow-400/40 text-xs cursor-pointer hover:bg-stone-900 transition" onclick="openEventAttendeesModal()">
+                <span class="flex items-center gap-1 font-bold">
+                    <span>📊</span> ఇప్పటివరకు హాజరైన వారు (చూడండి ➔):
+                </span>
+                <span id="bannerMeetingAttCount" class="bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full text-xs">0 మంది</span>
+            </div>
 
             <div class="pt-0.5">
                 <button id="btnMainSelfAttendance" onclick="handleAttendanceClick()" class="w-full bg-stone-950 hover:bg-stone-900 text-amber-400 font-extrabold text-xs py-2.5 px-3 rounded-lg shadow transition flex items-center justify-center gap-2 cursor-pointer border border-yellow-400/50">
@@ -101,17 +118,17 @@
         <div class="grid grid-cols-2 gap-3 pt-1">
             <div class="bg-emerald-800 p-3 rounded-xl shadow-md border border-emerald-500 text-center">
                 <p class="text-xs text-emerald-100">మొత్తం వసూళ్లు</p>
-                <p id="dashDonations" class="text-lg font-bold mt-0.5 text-white">₹50,000/-</p>
+                <p id="dashDonations" class="text-lg font-bold mt-0.5 text-white">₹0/-</p>
             </div>
             <div class="bg-red-700 p-3 rounded-xl shadow-md border border-red-500 text-center">
                 <p class="text-xs text-red-100">మొత్తం ఖర్చులు</p>
-                <p id="dashExpenses" class="text-lg font-bold mt-0.5 text-white">₹15,000/-</p>
+                <p id="dashExpenses" class="text-lg font-bold mt-0.5 text-white">₹0/-</p>
             </div>
         </div>
         
         <div class="w-full bg-[#facc15] text-stone-950 p-3 rounded-xl text-center font-bold border-2 border-amber-400 shadow-lg">
             <span class="text-xs font-bold uppercase tracking-wider block opacity-90">💥 కమిటీ వద్ద మిగిలివున్న నికర డబ్బులు 💥</span>
-            <span id="dashBalance" class="text-2xl font-black text-red-900">₹35,000/-</span>
+            <span id="dashBalance" class="text-2xl font-black text-red-900">₹0/-</span>
         </div>
 
         <button onclick="payViaUPI()" class="w-full bg-gradient-to-r from-emerald-500 via-green-600 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 text-white font-black text-lg py-4 px-4 rounded-xl shadow-xl border-2 border-emerald-300 transition transform active:scale-98 flex justify-between items-center cursor-pointer animate-pulse">
@@ -133,6 +150,14 @@
                 <span>➔</span>
             </button>
 
+            <button onclick="openCommitteeModal()" class="w-full bg-amber-500 hover:bg-amber-600 font-bold py-3.5 px-4 rounded-xl shadow-md transition flex justify-between items-center text-stone-900 cursor-pointer">
+                <span class="flex items-center gap-1.5">
+                    <span>👥 కమిటీ సభ్యుల వివరాలు</span>
+                    <span class="bg-stone-900 text-amber-300 text-xs px-2 py-0.5 rounded-full font-black ml-1 border border-amber-400" id="btnCommitteeCount">0</span>
+                </span>
+                <span>➔</span>
+            </button>
+
             <a href="https://www.facebook.com/share/17Zm5EKbV6/" target="_blank" rel="noopener noreferrer" class="w-full bg-blue-600 hover:bg-blue-700 font-bold py-3.5 px-4 rounded-xl shadow-md transition flex justify-between items-center text-white cursor-pointer">
                 <span class="flex items-center gap-2">
                     <svg class="w-5 h-5 fill-white" viewBox="0 0 24 24">
@@ -143,9 +168,33 @@
                 <span>➔</span>
             </a>
         </div>
+
+        <div class="space-y-3">
+            <h2 class="text-lg font-bold text-yellow-400 flex items-center gap-2">
+                <span>📅</span> రోజువారీ అప్డేట్స్
+            </h2>
+            <div id="updatesListContainer" class="space-y-3 max-h-[440px] overflow-y-auto pr-1"></div>
+        </div>
     </main>
 
     <!-- Modals -->
+
+    <!-- POPUP: EVENT ATTENDEES (GENERAL ATTENDANCE LIST) -->
+    <div id="eventAttendeesModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b flex justify-between items-center bg-emerald-700 text-white">
+                <h3 class="font-bold text-base flex items-center gap-2">
+                    <span>👥</span> ఈవెంట్‌కు హాజరైన వారి జాబితా
+                </h3>
+                <button onclick="closeEventAttendeesModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
+            </div>
+            <div class="p-3 bg-emerald-50 border-b border-emerald-200 text-xs text-emerald-900 font-bold flex justify-between items-center">
+                <span>మొత్తం హాజరైన వారు:</span>
+                <span id="modalEventAttendeesTotal" class="bg-emerald-700 text-white px-2 py-0.5 rounded-full text-xs font-black">0 మంది</span>
+            </div>
+            <div id="eventAttendeesListContainer" class="p-4 overflow-y-auto flex-grow space-y-2 text-xs"></div>
+        </div>
+    </div>
 
     <!-- POPUP 1: FORCED REGISTRATION FOR NEW USERS -->
     <div id="namePromptModal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
@@ -170,11 +219,16 @@
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden flex flex-col my-auto">
             <div class="p-4 bg-emerald-700 text-white flex justify-between items-center">
                 <h3 class="font-bold text-base flex items-center gap-1.5">
-                    <span>📝</span> హాజరు నమోదు (Attendance)
+                    <span>📝</span> ఈవెంట్ హాజరు నమోదు
                 </h3>
                 <button onclick="closeSelfAttendanceModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
             </div>
             <div class="p-4 space-y-3 text-xs">
+                <div class="bg-emerald-50 border border-emerald-200 p-2 rounded-lg text-emerald-900 font-bold flex justify-between items-center">
+                    <span>📅 ఈవెంట్ తేదీ:</span>
+                    <span id="attMeetingDate" class="text-emerald-800 font-extrabold text-sm">--/--/----</span>
+                </div>
+
                 <div>
                     <label class="block font-bold text-stone-700 mb-1">మీ పేరు:</label>
                     <input type="text" id="attUserInputName" placeholder="మీ పేరు..." class="w-full bg-stone-50 border border-stone-300 rounded-xl p-2 text-xs font-bold text-stone-900 focus:outline-none">
@@ -185,8 +239,8 @@
                     <input type="tel" id="attUserPhone" maxlength="10" placeholder="మొబైల్ నంబర్..." class="w-full bg-stone-50 border border-stone-300 rounded-xl p-2 text-xs font-bold text-stone-900 focus:outline-none">
                 </div>
 
-                <button onclick="submitSelfAttendance()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3 rounded-xl shadow transition active:scale-95 text-sm cursor-pointer mt-2">
-                    హాజరు నమోదు చేయండి ➔
+                <button id="btnSubmitAttendance" onclick="submitSelfAttendance()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3 rounded-xl shadow transition active:scale-95 text-sm cursor-pointer mt-2">
+                    హాజరు నమోదు చేయండి (Mark Attendance) ➔
                 </button>
                 <p id="attStatusMsg" class="text-center font-bold text-xs hidden"></p>
             </div>
@@ -198,7 +252,7 @@
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b flex justify-between items-center bg-emerald-700 text-white">
                 <h3 class="font-bold text-base flex items-center gap-2">
-                    <span>👁️</span> రిజిస్టర్డ్ వీక్షకుల జాబితా
+                    <span>👁️</span> లైవ్ వీక్షకుల జాబితా (Live Viewers)
                 </h3>
                 <button onclick="closeViewersModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
             </div>
@@ -210,7 +264,6 @@
         </div>
     </div>
 
-    <!-- AVETI MODAL -->
     <div id="avetiModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white">
@@ -219,73 +272,198 @@
                 </h3>
                 <button onclick="closeAvetiModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
             </div>
-            <div class="p-4 overflow-y-auto flex-grow space-y-2 text-xs">
-                <p class="text-stone-700">లెక్కలు త్వరలో అప్‌డేట్ చేయబడతాయి.</p>
+
+            <div class="p-3 bg-amber-50 border-b border-amber-200 grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="bg-emerald-100 border border-emerald-300 p-2 rounded-lg">
+                    <p class="text-[10px] text-emerald-800 font-bold">వసూళ్లు</p>
+                    <p id="avetiTotalCol" class="font-black text-emerald-700 mt-0.5">₹0/-</p>
+                </div>
+                <div class="bg-red-100 border border-red-300 p-2 rounded-lg">
+                    <p class="text-[10px] text-red-800 font-bold">ఖర్చులు</p>
+                    <p id="avetiTotalExp" class="font-black text-red-700 mt-0.5">₹0/-</p>
+                </div>
+                <div class="bg-yellow-100 border border-yellow-300 p-2 rounded-lg">
+                    <p class="text-[10px] text-yellow-900 font-bold">నిల్వ</p>
+                    <p id="avetiBalance" class="font-black text-amber-900 mt-0.5">₹0/-</p>
+                </div>
+            </div>
+
+            <div class="p-4 overflow-y-auto flex-grow space-y-4 text-xs">
+                <div>
+                    <h4 class="font-bold text-emerald-800 text-sm border-b-2 border-emerald-600 pb-1 mb-2 flex items-center justify-between">
+                        <span>🤝 వసూళ్ల వివరాలు</span>
+                    </h4>
+                    <div id="avetiDonationsContainer" class="space-y-2"></div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-red-800 text-sm border-b-2 border-red-600 pb-1 mb-2 flex items-center justify-between">
+                        <span>📊 ఖర్చుల వివరాలు</span>
+                    </h4>
+                    <div id="avetiExpensesContainer" class="space-y-2"></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- DONORS MODAL -->
     <div id="donorsModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl">
             <div class="p-4 border-b flex justify-between items-center bg-emerald-700 text-white rounded-t-2xl">
-                <h3 class="font-bold text-lg">🤝 దాతల వివరాలు</h3>
+                <h3 class="font-bold text-lg">🤝 దాతల వివరాలు (వసూళ్లు)</h3>
                 <button onclick="closeDonorsModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
             </div>
-            <div class="p-4 overflow-y-auto flex-grow space-y-2 text-xs">
-                <p class="text-stone-700">1. కే. శ్రీనివాస్ - ₹5,000/-</p>
-                <p class="text-stone-700">2. బి. నాగేష్ - ₹3,000/-</p>
-            </div>
+            <div id="donorsListContainer" class="p-4 overflow-y-auto flex-grow space-y-3"></div>
         </div>
     </div>
 
-    <!-- EXPENSES MODAL -->
     <div id="expensesModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl">
             <div class="p-4 border-b flex justify-between items-center bg-red-700 text-white rounded-t-2xl">
                 <h3 class="font-bold text-lg">📊 ఖర్చుల వివరాలు</h3>
                 <button onclick="closeExpensesModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
             </div>
-            <div class="p-4 overflow-y-auto flex-grow space-y-2 text-xs">
-                <p class="text-stone-700">1. కరపత్రాలు ముద్రణ - ₹3,000/-</p>
-                <p class="text-stone-700">2. టెంట్ ఏర్పాట్లు - ₹12,000/-</p>
+            <div id="expensesListContainer" class="p-4 overflow-y-auto flex-grow space-y-3"></div>
+        </div>
+    </div>
+
+    <!-- Committee Members Modal -->
+    <div id="committeeModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[82vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white rounded-t-2xl shrink-0">
+                <h3 class="font-bold text-base flex items-center gap-1.5">
+                    <span>👥 కమిటీ సభ్యుల వివరాలు</span>
+                    <span class="bg-amber-900 text-yellow-300 text-xs px-2 py-0.5 rounded-full font-black border border-yellow-300/50" id="modalCommitteeCount">0</span>
+                </h3>
+                <button onclick="closeCommitteeModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
+            </div>
+
+            <div class="p-3 bg-amber-50 border-b border-amber-200 shrink-0">
+                <p class="text-[11px] font-black text-amber-900 mb-1.5 flex items-center gap-1">
+                    <span>📌</span> మీటింగ్‌ల హాజరు సారాంశం:
+                </p>
+                <div id="meetingAttendanceSummaryContainer" class="flex gap-2 overflow-x-auto pb-1 no-scrollbar text-xs"></div>
+            </div>
+
+            <div id="committeeListContainer" class="p-4 overflow-y-auto flex-grow space-y-4"></div>
+        </div>
+    </div>
+
+    <div id="updatesModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden max-h-[85vh] flex flex-col">
+            <div class="p-4 bg-red-800 text-white flex justify-between items-center shrink-0">
+                <span id="modalDate" class="text-xs bg-red-900 px-2.5 py-1 rounded font-bold"></span>
+                <button onclick="closeUpdateModal()" class="text-2xl font-bold leading-none cursor-pointer">&times;</button>
+            </div>
+            <div class="p-5 space-y-4 overflow-y-auto">
+                <h3 id="modalTitle" class="font-bold text-lg text-red-900 border-b pb-1"></h3>
+                <p id="modalBody" class="text-stone-600 text-sm leading-relaxed text-justify whitespace-pre-line"></p>
+                <div id="modalImagesContainer" class="space-y-2 mt-2">
+                    <img id="modalImage1" src="" alt="Photo 1" class="w-full h-auto rounded-xl border shadow-xs hidden max-h-52 object-cover">
+                    <img id="modalImage2" src="" alt="Photo 2" class="w-full h-auto rounded-xl border shadow-xs hidden max-h-52 object-cover">
+                </div>
             </div>
         </div>
     </div>
 
     <!-- JavaScript Logic -->
     <script>
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzP7ibNTirNwlVzolEZo738nwZuijC_Y1NeCSeCdNlMFC_9K3z7j3dKiZFww7XYR0aY/exec";
+
         const UPI_ID = "8143765300@cnrb"; 
         const ACCOUNT_NAME = "Sri Buragana Polamma Sambaralu";
+
+        let currentActiveMeetingDate = "24/07/2026";
+        let currentActiveMeetingTime = "07:00 PM";
+        let isAttendanceTimeMatched = false;
 
         function updateLiveHeaderClock() {
             const now = new Date();
             const dateStr = now.toLocaleDateString('en-GB'); 
             const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
 
-            document.getElementById('topLiveDate').innerText = dateStr;
-            document.getElementById('topLiveTime').innerText = timeStr;
+            const dElem = document.getElementById('topLiveDate');
+            const tElem = document.getElementById('topLiveTime');
+
+            if (dElem) dElem.innerText = dateStr;
+            if (tElem) tElem.innerText = timeStr;
+
+            checkDateTimeMatch(now, dateStr);
         }
 
         setInterval(updateLiveHeaderClock, 1000);
 
-        // Load Registered Users List from LocalStorage
-        function getRegisteredUsers() {
-            let users = localStorage.getItem('polamma_registered_users');
-            return users ? JSON.parse(users) : [];
+        function checkDateTimeMatch(nowObj, currentFormattedDate) {
+            const btnText = document.getElementById('btnAttendanceText');
+            const btn = document.getElementById('btnMainSelfAttendance');
+            const badge = document.getElementById('eventBadgeStatus');
+
+            let meetingParts = currentActiveMeetingDate.split('/');
+            if (meetingParts.length === 3) {
+                let mDate = new Date(meetingParts[2], meetingParts[1] - 1, meetingParts[0]);
+                let expiryDate = new Date(mDate);
+                expiryDate.setDate(expiryDate.getDate() + 1); 
+
+                let todayCheck = new Date(nowObj.getFullYear(), nowObj.getMonth(), nowObj.getDate());
+
+                if (todayCheck > expiryDate) {
+                    if (badge) {
+                        badge.innerText = "❌ ఈవెంట్ ముగిసింది (Expired)";
+                        badge.className = "text-[10px] bg-red-900 text-white font-black px-2 py-0.5 rounded-full border border-red-500";
+                    }
+                    if (btn) {
+                        btn.classList.add('opacity-60');
+                        if (btnText) btnText.innerText = "❌ మీటింగ్ గడువు ముగిసింది";
+                    }
+                    isAttendanceTimeMatched = false;
+                } else if (todayCheck.getTime() === mDate.getTime() || todayCheck.getTime() === expiryDate.getTime()) {
+                    if (badge) {
+                        badge.innerText = "🔥 లైవ్ మీటింగ్ / ఈవెంట్";
+                        badge.className = "text-[10px] bg-emerald-900 text-emerald-300 font-black px-2 py-0.5 rounded-full border border-emerald-500 animate-pulse";
+                    }
+                    if (btn) {
+                        btn.classList.remove('opacity-60');
+                        if (btnText) btnText.innerText = "📝 హాజరు నమోదు చేయండి (Mark Attendance)";
+                    }
+                    isAttendanceTimeMatched = true;
+                } else {
+                    if (badge) {
+                        badge.innerText = "⏳ రాబోయే మీటింగ్";
+                        badge.className = "text-[10px] bg-stone-950 text-yellow-300 font-black px-2 py-0.5 rounded-full border border-yellow-400/40";
+                    }
+                    if (btn) {
+                        btn.classList.add('opacity-60');
+                        if (btnText) btnText.innerText = "🔒 మీటింగ్ తేదీ రాగానే హాజరు తెరవబడుతుంది";
+                    }
+                    isAttendanceTimeMatched = false;
+                }
+            }
+        }
+
+        function handleAttendanceClick() {
+            let savedName = localStorage.getItem('polamma_viewer_name');
+            if (!savedName) {
+                alert("దయచేసి ముందుగా రిజిస్టర్ చేసుకోండి.");
+                checkViewerDetailsPrompt();
+                return;
+            }
+
+            if (!isAttendanceTimeMatched) {
+                alert(`⚠️ ప్రవేశం నిరోధించబడింది!\n\nఈ మీటింగ్ గడువు ముగిసింది లేదా ఇంకా ప్రారంభం కాలేదు.`);
+                return;
+            }
+            openSelfAttendanceModal();
         }
 
         function checkViewerDetailsPrompt() {
             let savedName = localStorage.getItem('polamma_viewer_name');
             let savedPhone = localStorage.getItem('polamma_viewer_phone');
             
-            if (!savedName || !savedPhone || savedPhone.length !== 10) {
+            if (!savedName || !savedPhone || savedName.trim() === "" || savedPhone.length !== 10) {
                 document.getElementById('namePromptModal').classList.remove('hidden');
                 document.getElementById('mainContainerApp').classList.add('locked-content');
             } else {
                 document.getElementById('namePromptModal').classList.add('hidden');
                 document.getElementById('mainContainerApp').classList.remove('locked-content');
-                updateViewerCounterUI();
             }
         }
 
@@ -297,33 +475,37 @@
                 localStorage.setItem('polamma_viewer_name', nameInput);
                 localStorage.setItem('polamma_viewer_phone', phoneInput);
                 
-                // Save to local list of registered users
-                let users = getRegisteredUsers();
-                if (!users.some(u => u.phone === phoneInput)) {
-                    users.push({ name: nameInput, phone: phoneInput, time: new Date().toLocaleTimeString() });
-                    localStorage.setItem('polamma_registered_users', JSON.stringify(users));
-                }
-
                 document.getElementById('namePromptModal').classList.add('hidden');
                 document.getElementById('mainContainerApp').classList.remove('locked-content');
                 
-                updateViewerCounterUI();
+                // Immediately record viewer in GeneralAttendance sheet
+                registerViewerLive(nameInput, phoneInput);
             } else {
-                alert("దయచేసి మీ పూర్తి పేరు మరియు సరైన 10 అంకెల మొబైల్ నంబర్ ఎంటర్ చేయండి.");
+                alert("దయచేసి సరైన పేరు మరియు 10 అంకెల మొబైల్ నంబర్ ఎంటర్ చేయండి.");
             }
         }
 
-        function updateViewerCounterUI() {
-            let users = getRegisteredUsers();
-            const countElem = document.getElementById('liveViewerCount');
-            if (countElem) {
-                countElem.innerText = users.length > 0 ? users.length : 1;
+        async function registerViewerLive(name, phone) {
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        meetingDate: currentActiveMeetingDate,
+                        memberName: name,
+                        mobileNumber: phone,
+                        selfieBase64: ""
+                    })
+                });
+                fetchLiveData();
+            } catch (err) {
+                console.error("Viewer registration error:", err);
             }
         }
 
         function openViewersModal() {
             let savedName = localStorage.getItem('polamma_viewer_name');
             if (!savedName) {
+                alert("దయచేసి ముందుగా మీ పేరు మరియు ఫోన్ నంబర్ నమోదు చేయండి.");
                 checkViewerDetailsPrompt();
                 return;
             }
@@ -331,26 +513,27 @@
             const listContainer = document.getElementById('viewersListContainer');
             const totalElem = document.getElementById('modalViewersTotalCount');
             
-            let users = getRegisteredUsers();
-            totalElem.innerText = `${users.length} మంది`;
+            // Filter unique viewers from GeneralAttendance database
+            let viewers = database.generalAttendance || [];
+            totalElem.innerText = `${viewers.length} మంది`;
 
-            if (users.length > 0) {
-                listContainer.innerHTML = users.map((v, idx) => `
+            if (viewers.length > 0) {
+                listContainer.innerHTML = viewers.map((v, idx) => `
                     <div class="flex justify-between items-center p-2 rounded-lg border bg-stone-50 border-stone-200 text-stone-800">
                         <div class="flex flex-col">
                             <span class="font-bold flex items-center gap-1.5 text-xs">
                                 <span>👤</span>
                                 <span>${idx + 1}. ${v.name}</span>
                             </span>
-                            <span class="text-[10px] text-stone-500 pl-4 font-semibold">📞 ${v.phone}</span>
+                            <span class="text-[10px] text-stone-500 pl-4 font-semibold">📞 ${v.phone || 'నమోదు కాలేదు'}</span>
                         </div>
-                        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-extrabold">
-                            రిజిస్టర్డ్
+                        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1 shrink-0">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> లైవ్ వీక్షకుడు
                         </span>
                     </div>
                 `).join('');
             } else {
-                listContainer.innerHTML = '<p class="text-stone-500 text-center py-2">ఎవరూ నమోదు కాలేదు</p>';
+                listContainer.innerHTML = '<p class="text-stone-500 text-center py-2">ఎవరూ అందుబాటులో లేరు</p>';
             }
 
             document.getElementById('viewersModal').classList.remove('hidden');
@@ -360,19 +543,47 @@
             document.getElementById('viewersModal').classList.add('hidden');
         }
 
-        function handleAttendanceClick() {
-            let savedName = localStorage.getItem('polamma_viewer_name');
-            if (!savedName) {
-                checkViewerDetailsPrompt();
-                return;
+        function openEventAttendeesModal() {
+            const container = document.getElementById('eventAttendeesListContainer');
+            const totalElem = document.getElementById('modalEventAttendeesTotal');
+            
+            let attendees = database.generalAttendance.filter(g => g.date === currentActiveMeetingDate);
+            totalElem.innerText = `${attendees.length} మంది`;
+
+            if (attendees.length > 0) {
+                container.innerHTML = attendees.map((att, idx) => `
+                    <div class="flex justify-between items-center p-2 rounded-lg border bg-stone-50 border-stone-200 text-stone-800">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-xs">👤 ${idx + 1}. ${att.name}</span>
+                            <span class="text-[10px] text-stone-500 pl-4">📞 ${att.phone || 'నమోదు కాలేదు'}</span>
+                        </div>
+                        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">హాజరయ్యారు</span>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<p class="text-stone-500 text-center py-3">ఈ ఈవెంట్‌కు ఇంకా ఎవరూ హాజరు నమోదు చేయలేదు</p>';
             }
-            openSelfAttendanceModal();
+
+            document.getElementById('eventAttendeesModal').classList.remove('hidden');
+        }
+
+        function closeEventAttendeesModal() {
+            document.getElementById('eventAttendeesModal').classList.add('hidden');
         }
 
         function openSelfAttendanceModal() {
-            document.getElementById('attUserInputName').value = localStorage.getItem('polamma_viewer_name') || '';
-            document.getElementById('attUserPhone').value = localStorage.getItem('polamma_viewer_phone') || '';
+            const nameInput = document.getElementById('attUserInputName');
+            const phoneInput = document.getElementById('attUserPhone');
+            
+            document.getElementById('attMeetingDate').innerText = currentActiveMeetingDate;
             document.getElementById('attStatusMsg').classList.add('hidden');
+
+            let savedName = localStorage.getItem('polamma_viewer_name');
+            let savedPhone = localStorage.getItem('polamma_viewer_phone');
+            
+            if (savedName) nameInput.value = savedName;
+            if (savedPhone) phoneInput.value = savedPhone;
+
             document.getElementById('selfAttendanceModal').classList.remove('hidden');
         }
 
@@ -380,9 +591,10 @@
             document.getElementById('selfAttendanceModal').classList.add('hidden');
         }
 
-        function submitSelfAttendance() {
+        async function submitSelfAttendance() {
             const name = document.getElementById('attUserInputName').value.trim();
             const phone = document.getElementById('attUserPhone').value.trim();
+            const btn = document.getElementById('btnSubmitAttendance');
             const statusMsg = document.getElementById('attStatusMsg');
 
             if (!name || phone.length !== 10) {
@@ -390,11 +602,336 @@
                 return;
             }
 
-            statusMsg.innerText = "🎉 మీ హాజరు విజయవంతంగా నమోదైంది!";
-            statusMsg.className = "text-center font-bold text-xs text-emerald-600 block mt-2";
-            setTimeout(() => {
-                closeSelfAttendanceModal();
-            }, 1500);
+            btn.disabled = true;
+            btn.innerText = "నమోదు అవుతోంది... ⏳";
+            statusMsg.classList.add('hidden');
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        meetingDate: currentActiveMeetingDate,
+                        memberName: name,
+                        mobileNumber: phone,
+                        selfieBase64: ""
+                    })
+                });
+
+                statusMsg.innerText = "🎉 మీ హాజరు విజయవంతంగా నమోదైంది!";
+                statusMsg.className = "text-center font-bold text-xs text-emerald-600 block mt-2";
+                setTimeout(() => {
+                    closeSelfAttendanceModal();
+                    fetchLiveData();
+                }, 1800);
+            } catch (err) {
+                statusMsg.innerText = "🎉 మీ హాజరు నమోదు చేయబడింది!";
+                statusMsg.className = "text-center font-bold text-xs text-emerald-600 block mt-2";
+                setTimeout(() => {
+                    closeSelfAttendanceModal();
+                    fetchLiveData();
+                }, 1800);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "హాజరు నమోదు చేయండి (Mark Attendance) ➔";
+            }
+        }
+
+        const CASTE_COLOR_THEMES = [
+            { bg: "bg-amber-50", border: "border-amber-300", header: "text-amber-900 border-amber-200", btn: "bg-emerald-600 hover:bg-emerald-700" },
+            { bg: "bg-blue-50", border: "border-blue-300", header: "text-blue-900 border-blue-200", btn: "bg-blue-600 hover:bg-blue-700" },
+            { bg: "bg-emerald-50", border: "border-emerald-300", header: "text-emerald-900 border-emerald-200", btn: "bg-emerald-600 hover:bg-emerald-700" }
+        ];
+
+        let database = { donations: [], expenses: [], updates: [], committee: [], committeeMeetingSummaries: [], avetiDonations: [], avetiExpenses: [], generalAttendance: [], events: [] };
+
+        function parseDate(dateStr) {
+            if(!dateStr) return new Date(0);
+            let parts = String(dateStr).split('/');
+            if(parts.length === 3) return new Date(parts[2], parts[1] - 1, parts[0]);
+            return new Date(dateStr);
+        }
+
+        async function fetchLiveData() {
+            if (!GOOGLE_SCRIPT_URL) return;
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                const data = await response.json();
+                if (data) {
+                    database.donations = data.donations || [];
+                    database.expenses = data.expenses || [];
+                    database.updates = data.updates || [];
+                    database.events = data.events || [];
+                    
+                    if (data.committee && data.committee.members) {
+                        database.committee = data.committee.members || [];
+                        database.committeeMeetingSummaries = data.committee.meetingSummaries || [];
+                    } else {
+                        database.committee = data.committee || [];
+                        database.committeeMeetingSummaries = [];
+                    }
+
+                    database.avetiDonations = data.avetiDonations || [];
+                    database.avetiExpenses = data.avetiExpenses || [];
+                    database.generalAttendance = data.generalAttendance || [];
+                }
+                updateDashboard();
+                renderEventsData();
+                updateLiveViewersCountUI();
+            } catch (err) {
+                console.error("Error fetching live data:", err);
+            }
+        }
+
+        function updateLiveViewersCountUI() {
+            const countElem = document.getElementById('liveViewerCount');
+            let viewersCount = database.generalAttendance ? database.generalAttendance.length : 0;
+            if (viewersCount < 1) viewersCount = 1; // Minimum show 1 if connected
+            if (countElem) {
+                countElem.innerText = viewersCount;
+            }
+        }
+
+        function renderEventsData() {
+            if (database.events && database.events.length > 0) {
+                const latestEvent = database.events[0];
+                currentActiveMeetingDate = latestEvent.date || "24/07/2026";
+                currentActiveMeetingTime = latestEvent.time || "07:00 PM";
+
+                document.getElementById('eventTitle').innerText = latestEvent.title || 'గ్రామ కమిటీ మీటింగ్';
+                document.getElementById('eventDate').innerText = latestEvent.date || '--/--/----';
+                document.getElementById('eventDetails').innerText = latestEvent.details || 'వివరాలు నమోదు కాలేదు';
+                document.getElementById('eventTime').innerText = latestEvent.time || '--:-- --';
+                document.getElementById('eventLocation').innerText = latestEvent.location || 'గ్రామ సచివాలయం';
+
+                const liveWrapper = document.getElementById('liveStreamWrapper');
+                const liveIframe = document.getElementById('liveStreamIframe');
+                if (latestEvent.liveLink && latestEvent.liveLink.trim() !== "") {
+                    liveIframe.src = latestEvent.liveLink.trim();
+                    liveWrapper.classList.remove('hidden');
+                } else {
+                    liveWrapper.classList.add('hidden');
+                    liveIframe.src = "";
+                }
+            }
+        }
+
+        function updateDashboard() {
+            let totalDonations = database.donations.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            let totalExpenses = database.expenses.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            let netBalance = totalDonations - totalExpenses;
+
+            document.getElementById('dashDonations').innerText = `₹${totalDonations.toLocaleString('en-IN')}/-`;
+            document.getElementById('dashExpenses').innerText = `₹${totalExpenses.toLocaleString('en-IN')}/-`;
+            document.getElementById('dashBalance').innerText = `₹${netBalance.toLocaleString('en-IN')}/-`;
+
+            renderLists();
+            renderAvetiData();
+            updateMeetingAttendanceCountUI();
+        }
+
+        function updateMeetingAttendanceCountUI() {
+            const countBadge = document.getElementById('bannerMeetingAttCount');
+            let count = 0;
+
+            if (database.generalAttendance && database.generalAttendance.length > 0) {
+                const genCount = database.generalAttendance.filter(g => g.date === currentActiveMeetingDate).length;
+                count = genCount;
+            }
+
+            if (countBadge) {
+                countBadge.innerText = `${count} మంది`;
+            }
+        }
+
+        function renderLists() {
+            document.getElementById('donorsListContainer').innerHTML = database.donations.length > 0 ? database.donations.map((item, idx) => `
+                <div class="flex justify-between items-center border-b pb-2 text-stone-800">
+                    <div class="pr-2">
+                        <p class="font-bold text-sm">${idx + 1}. ${item.text}</p>
+                        <p class="text-[10px] text-stone-500">📅 ${item.date}</p>
+                    </div>
+                    <span class="font-bold text-emerald-600 shrink-0">₹${Number(item.amount).toLocaleString('en-IN')}/-</span>
+                </div>
+            `).join('') : '<p class="text-stone-500 text-center py-2 text-sm">వివరాలు లేవు</p>';
+
+            document.getElementById('expensesListContainer').innerHTML = database.expenses.length > 0 ? database.expenses.map((item, idx) => `
+                <div class="flex justify-between items-center border-b pb-2 text-stone-800">
+                    <div class="pr-2">
+                        <p class="font-bold text-sm">${idx + 1}. ${item.text}</p>
+                        <p class="text-[10px] text-stone-500">📅 ${item.date}</p>
+                    </div>
+                    <span class="font-bold text-red-600 shrink-0">₹${Number(item.amount).toLocaleString('en-IN')}/-</span>
+                </div>
+            `).join('') : '<p class="text-stone-500 text-center py-2 text-sm">వివరాలు లేవు</p>';
+
+            renderCommitteeList();
+
+            let sortedUpdates = [...database.updates].sort((a, b) => parseDate(b.date) - parseDate(a.date));
+
+            document.getElementById('updatesListContainer').innerHTML = sortedUpdates.length > 0 ? sortedUpdates.map((item, index) => {
+                return `
+                <div onclick="openUpdateModalByIndex(${index})" class="bg-white text-stone-900 p-3.5 rounded-xl shadow border-l-4 border-yellow-500 flex justify-between items-center cursor-pointer hover:bg-stone-50 transition">
+                    <div class="flex-1">
+                        <span class="text-[10px] text-red-700 font-bold block mb-0.5">📅 ${item.date}</span>
+                        <h3 class="font-bold text-sm text-stone-800 leading-snug">${item.title}</h3>
+                        <span class="inline-block mt-1.5 text-[10px] bg-red-50 text-red-700 px-2 py-0.5 rounded font-bold border border-red-100">సమాచారం & ఫోటోలు ➔</span>
+                    </div>
+                    ${item.image1 ? `
+                    <div class="w-12 h-12 rounded-lg overflow-hidden shrink-0 ml-2 shadow-inner">
+                        <img src="${item.image1}" class="w-full h-full object-cover">
+                    </div>` : '<div class="text-xl pl-2">📢</div>'}
+                </div>
+            `}).join('') : '<p class="text-yellow-200 text-center py-2 text-sm">అప్‌డేట్స్ లేవు</p>';
+        }
+
+        function renderAvetiData() {
+            let totalCol = database.avetiDonations.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            let totalExp = database.avetiExpenses.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            let bal = totalCol - totalExp;
+
+            document.getElementById('avetiTotalCol').innerText = `₹${totalCol.toLocaleString('en-IN')}/-`;
+            document.getElementById('avetiTotalExp').innerText = `₹${totalExp.toLocaleString('en-IN')}/-`;
+            document.getElementById('avetiBalance').innerText = `₹${bal.toLocaleString('en-IN')}/-`;
+
+            document.getElementById('avetiDonationsContainer').innerHTML = database.avetiDonations.length > 0 ? database.avetiDonations.map((item, idx) => `
+                <div class="flex justify-between items-center border-b pb-1 text-stone-800">
+                    <div>
+                        <p class="font-bold">${idx + 1}. ${item.text}</p>
+                        <p class="text-[9px] text-stone-500">📅 ${item.date}</p>
+                    </div>
+                    <span class="font-bold text-emerald-600">₹${Number(item.amount).toLocaleString('en-IN')}/-</span>
+                </div>
+            `).join('') : '<p class="text-stone-400 text-center py-1">వివరాలు లేవు</p>';
+
+            document.getElementById('avetiExpensesContainer').innerHTML = database.avetiExpenses.length > 0 ? database.avetiExpenses.map((item, idx) => `
+                <div class="flex justify-between items-center border-b pb-1 text-stone-800">
+                    <div>
+                        <p class="font-bold">${idx + 1}. ${item.text}</p>
+                        <p class="text-[9px] text-stone-500">📅 ${item.date}</p>
+                    </div>
+                    <span class="font-bold text-red-600">₹${Number(item.amount).toLocaleString('en-IN')}/-</span>
+                </div>
+            `).join('') : '<p class="text-stone-400 text-center py-1">వివరాలు లేవు</p>';
+        }
+
+        function renderCommitteeList() {
+            const container = document.getElementById('committeeListContainer');
+            const summaryContainer = document.getElementById('meetingAttendanceSummaryContainer');
+            
+            const totalMembers = database.committee ? database.committee.length : 0;
+            
+            document.getElementById('btnCommitteeCount').innerText = `${totalMembers} మంది`;
+            document.getElementById('modalCommitteeCount').innerText = `${totalMembers} మంది`;
+
+            if (database.committeeMeetingSummaries && database.committeeMeetingSummaries.length > 0) {
+                summaryContainer.innerHTML = database.committeeMeetingSummaries.map(s => `
+                    <div class="bg-white border border-amber-300 px-2.5 py-1 rounded-lg shrink-0 text-center shadow-xs">
+                        <span class="block text-[9px] font-bold text-stone-500">📅 ${s.date}</span>
+                        <span class="text-xs font-extrabold text-emerald-700">${s.attended} / ${s.total} హాజరు</span>
+                    </div>
+                `).join('');
+            } else {
+                summaryContainer.innerHTML = '<span class="text-[10px] text-stone-500">మీటింగ్ వివరాలు లేవు</span>';
+            }
+
+            if (!database.committee || database.committee.length === 0) {
+                container.innerHTML = '<p class="text-stone-500 text-center py-2 text-sm">కమిటీ వివరాలు ఇంకా నమోదు చేయలేదు</p>';
+                return;
+            }
+
+            const grouped = {};
+            database.committee.forEach(item => {
+                const caste = item.caste && item.caste.trim() !== "" ? item.caste.trim() : 'ఇతర సభ్యులు';
+                if (!grouped[caste]) grouped[caste] = [];
+                grouped[caste].push(item);
+            });
+
+            let html = '';
+            let colorIndex = 0;
+
+            for (const caste in grouped) {
+                const theme = CASTE_COLOR_THEMES[colorIndex % CASTE_COLOR_THEMES.length];
+                colorIndex++;
+
+                html += `
+                    <div class="${theme.bg} rounded-xl p-3 border ${theme.border} shadow-sm">
+                        <h4 class="font-bold ${theme.header} text-sm border-b pb-1 mb-2 flex items-center justify-between">
+                            <span class="flex items-center gap-1.5">🚩 ${caste}</span>
+                            <span class="text-[10px] bg-white/80 font-bold px-2 py-0.5 rounded-full border border-stone-200">${grouped[caste].length} సభ్యులు</span>
+                        </h4>
+                        <div class="space-y-3">
+                            ${grouped[caste].map((member, idx) => {
+                                const cleanPhone = member.phone ? String(member.phone).replace(/[^0-9]/g, '') : '';
+                                const attSummary = member.attendanceSummary || '0/0';
+                                const datesList = member.dateWiseAttendance || [];
+                                
+                                return `
+                                <div class="border-b border-stone-200/70 pb-2">
+                                    <div class="flex justify-between items-start text-xs text-stone-800 gap-1">
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-stone-900">${idx + 1}. ${member.name}</span>
+                                            <span class="text-[10px] text-stone-600 mt-0.5">హాజరు: <b class="text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded font-black">${attSummary}</b></span>
+                                        </div>
+                                        ${cleanPhone !== "" ? `
+                                            <div class="flex items-center gap-1 shrink-0">
+                                                <a href="tel:${cleanPhone}" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-xs">
+                                                    📞 Call
+                                                </a>
+                                                <a href="https://wa.me/91${cleanPhone}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-xs">
+                                                    <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                                                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                                                    </svg>
+                                                    Chat
+                                                </a>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+
+                                    ${datesList.length > 0 ? `
+                                        <div class="flex flex-wrap gap-1 mt-1.5 pt-1 border-t border-dashed border-stone-200">
+                                            ${datesList.map(d => `
+                                                <span class="text-[9px] px-1.5 py-0.5 rounded font-bold ${d.status === 'P' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-red-100 text-red-700 border border-red-200'}">
+                                                    📅 ${d.date}: <b>${d.status === 'P' ? '☑️ హాజరు' : '⬜ రాలేదు'}</b>
+                                                </span>
+                                            `).join('')}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `}).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        function openUpdateModalByIndex(index) {
+            let sortedUpdates = [...database.updates].sort((a, b) => parseDate(b.date) - parseDate(a.date));
+            let item = sortedUpdates[index];
+            if (!item) return;
+
+            document.getElementById('modalDate').innerText = item.date || '';
+            document.getElementById('modalTitle').innerText = item.title || '';
+            document.getElementById('modalBody').innerText = item.body || '';
+            
+            const mImg1 = document.getElementById('modalImage1');
+            const mImg2 = document.getElementById('modalImage2');
+            
+            if (item.image1 && item.image1 !== "undefined" && item.image1 !== "") {
+                mImg1.src = item.image1;
+                mImg1.classList.remove('hidden');
+            } else {
+                mImg1.classList.add('hidden');
+            }
+            
+            if (item.image2 && item.image2 !== "undefined" && item.image2 !== "") {
+                mImg2.src = item.image2;
+                mImg2.classList.remove('hidden');
+            } else {
+                mImg2.classList.add('hidden');
+            }
+
+            document.getElementById('updatesModal').classList.remove('hidden');
         }
 
         function payViaUPI() {
@@ -411,17 +948,30 @@
         function openExpensesModal() { document.getElementById('expensesModal').classList.remove('hidden'); }
         function closeExpensesModal() { document.getElementById('expensesModal').classList.add('hidden'); }
 
+        function openCommitteeModal() { document.getElementById('committeeModal').classList.remove('hidden'); }
+        function closeCommitteeModal() { document.getElementById('committeeModal').classList.add('hidden'); }
+
+        function closeUpdateModal() { document.getElementById('updatesModal').classList.add('hidden'); }
+
         window.onclick = function(event) {
             if (event.target == document.getElementById('avetiModal')) closeAvetiModal();
             if (event.target == document.getElementById('donorsModal')) closeDonorsModal();
             if (event.target == document.getElementById('expensesModal')) closeExpensesModal();
+            if (event.target == document.getElementById('committeeModal')) closeCommitteeModal();
+            if (event.target == document.getElementById('updatesModal')) closeUpdateModal();
             if (event.target == document.getElementById('viewersModal')) closeViewersModal();
             if (event.target == document.getElementById('selfAttendanceModal')) closeSelfAttendanceModal();
+            if (event.target == document.getElementById('eventAttendeesModal')) closeEventAttendeesModal();
         }
 
         updateLiveHeaderClock();
         checkViewerDetailsPrompt();
-        updateViewerCounterUI();
+        fetchLiveData();
+
+        setInterval(() => {
+            fetchLiveData();
+        }, 10000);
+
     </script>
 </body>
 </html>
