@@ -41,7 +41,7 @@
                   <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
                 <span class="text-xs font-bold text-amber-200 flex items-center gap-1">
-                    <span>👁️</span> <span id="liveViewerCount" class="text-emerald-400 font-extrabold text-xs">0</span>
+                    <span>👁️</span> <span id="liveViewerCount" class="text-emerald-400 font-extrabold text-xs">1</span>
                 </span>
             </button>
         </div>
@@ -252,18 +252,19 @@
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b flex justify-between items-center bg-emerald-700 text-white">
                 <h3 class="font-bold text-base flex items-center gap-2">
-                    <span>👁️</span> లైవ్ వీక్షకుల జాబితా (Live Viewers)
+                    <span>👁️</span> లైవ్ వీక్షకుల వివరాలు
                 </h3>
                 <button onclick="closeViewersModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
             </div>
             <div class="p-3 bg-emerald-50 border-b border-emerald-200 text-xs text-emerald-900 font-bold flex justify-between items-center">
-                <span>మొత్తం వీక్షకులు:</span>
-                <span id="modalViewersTotalCount" class="bg-emerald-700 text-white px-2 py-0.5 rounded-full text-xs font-black">0 మంది</span>
+                <span>ప్రస్తుతం ఆన్‌లైన్‌లో ఉన్నవారు:</span>
+                <span id="modalViewersTotalCount" class="bg-emerald-700 text-white px-2 py-0.5 rounded-full text-xs font-black">0</span>
             </div>
             <div id="viewersListContainer" class="p-4 overflow-y-auto flex-grow space-y-2 text-xs"></div>
         </div>
     </div>
 
+    <!-- AVETI MODAL -->
     <div id="avetiModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white">
@@ -306,6 +307,7 @@
         </div>
     </div>
 
+    <!-- DONORS MODAL -->
     <div id="donorsModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl">
             <div class="p-4 border-b flex justify-between items-center bg-emerald-700 text-white rounded-t-2xl">
@@ -316,6 +318,7 @@
         </div>
     </div>
 
+    <!-- EXPENSES MODAL -->
     <div id="expensesModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl">
             <div class="p-4 border-b flex justify-between items-center bg-red-700 text-white rounded-t-2xl">
@@ -326,7 +329,7 @@
         </div>
     </div>
 
-    <!-- Committee Members Modal -->
+    <!-- COMMITTEE MODAL -->
     <div id="committeeModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[82vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white rounded-t-2xl shrink-0">
@@ -348,6 +351,7 @@
         </div>
     </div>
 
+    <!-- UPDATES MODAL -->
     <div id="updatesModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden max-h-[85vh] flex flex-col">
             <div class="p-4 bg-red-800 text-white flex justify-between items-center shrink-0">
@@ -375,17 +379,15 @@
         let currentActiveMeetingDate = "24/07/2026";
         let currentActiveMeetingTime = "07:00 PM";
         let isAttendanceTimeMatched = false;
+        const SESSION_ID = 'user_' + Math.random().toString(36).substring(2, 9);
 
         function updateLiveHeaderClock() {
             const now = new Date();
             const dateStr = now.toLocaleDateString('en-GB'); 
             const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
 
-            const dElem = document.getElementById('topLiveDate');
-            const tElem = document.getElementById('topLiveTime');
-
-            if (dElem) dElem.innerText = dateStr;
-            if (tElem) tElem.innerText = timeStr;
+            document.getElementById('topLiveDate').innerText = dateStr;
+            document.getElementById('topLiveTime').innerText = timeStr;
 
             checkDateTimeMatch(now, dateStr);
         }
@@ -439,31 +441,60 @@
             }
         }
 
-        function handleAttendanceClick() {
-            let savedName = localStorage.getItem('polamma_viewer_name');
-            if (!savedName) {
-                alert("దయచేసి ముందుగా రిజిస్టర్ చేసుకోండి.");
-                checkViewerDetailsPrompt();
-                return;
+        // Real-time Active Live Viewers (Using LocalStorage Heartbeat)
+        function getActiveLiveViewers() {
+            let rawData = localStorage.getItem('polamma_active_live_viewers');
+            let viewers = rawData ? JSON.parse(rawData) : {};
+            let now = Date.now();
+            let activeViewers = {};
+            
+            for (let id in viewers) {
+                if (now - viewers[id].lastSeen < 15000) {
+                    activeViewers[id] = viewers[id];
+                }
             }
+            return activeViewers;
+        }
 
-            if (!isAttendanceTimeMatched) {
-                alert(`⚠️ ప్రవేశం నిరోధించబడింది!\n\nఈ మీటింగ్ గడువు ముగిసింది లేదా ఇంకా ప్రారంభం కాలేదు.`);
-                return;
+        function sendHeartbeat() {
+            let name = localStorage.getItem('polamma_viewer_name');
+            let phone = localStorage.getItem('polamma_viewer_phone');
+            if (!name || !phone) return;
+
+            let viewers = getActiveLiveViewers();
+            viewers[SESSION_ID] = {
+                name: name,
+                phone: phone,
+                lastSeen: Date.now()
+            };
+            localStorage.setItem('polamma_active_live_viewers', JSON.stringify(viewers));
+            updateLiveCounterDisplay();
+        }
+
+        setInterval(sendHeartbeat, 4000);
+
+        function updateLiveCounterDisplay() {
+            let viewers = getActiveLiveViewers();
+            let count = Object.keys(viewers).length;
+            if (count < 1) count = 1;
+
+            const countElem = document.getElementById('liveViewerCount');
+            if (countElem) {
+                countElem.innerText = count;
             }
-            openSelfAttendanceModal();
         }
 
         function checkViewerDetailsPrompt() {
             let savedName = localStorage.getItem('polamma_viewer_name');
             let savedPhone = localStorage.getItem('polamma_viewer_phone');
             
-            if (!savedName || !savedPhone || savedName.trim() === "" || savedPhone.length !== 10) {
+            if (!savedName || !savedPhone || savedPhone.length !== 10) {
                 document.getElementById('namePromptModal').classList.remove('hidden');
                 document.getElementById('mainContainerApp').classList.add('locked-content');
             } else {
                 document.getElementById('namePromptModal').classList.add('hidden');
                 document.getElementById('mainContainerApp').classList.remove('locked-content');
+                sendHeartbeat();
             }
         }
 
@@ -478,62 +509,45 @@
                 document.getElementById('namePromptModal').classList.add('hidden');
                 document.getElementById('mainContainerApp').classList.remove('locked-content');
                 
-                // Immediately record viewer in GeneralAttendance sheet
-                registerViewerLive(nameInput, phoneInput);
+                sendHeartbeat();
             } else {
-                alert("దయచేసి సరైన పేరు మరియు 10 అంకెల మొబైల్ నంబర్ ఎంటర్ చేయండి.");
-            }
-        }
-
-        async function registerViewerLive(name, phone) {
-            try {
-                await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        meetingDate: currentActiveMeetingDate,
-                        memberName: name,
-                        mobileNumber: phone,
-                        selfieBase64: ""
-                    })
-                });
-                fetchLiveData();
-            } catch (err) {
-                console.error("Viewer registration error:", err);
+                alert("దయచేసి మీ పూర్తి పేరు మరియు సరైన 10 అంకెల మొబైల్ నంబర్ ఎంటర్ చేయండి.");
             }
         }
 
         function openViewersModal() {
             let savedName = localStorage.getItem('polamma_viewer_name');
             if (!savedName) {
-                alert("దయచేసి ముందుగా మీ పేరు మరియు ఫోన్ నంబర్ నమోదు చేయండి.");
                 checkViewerDetailsPrompt();
                 return;
             }
 
+            sendHeartbeat();
             const listContainer = document.getElementById('viewersListContainer');
             const totalElem = document.getElementById('modalViewersTotalCount');
             
-            // Filter unique viewers from GeneralAttendance database
-            let viewers = database.generalAttendance || [];
-            totalElem.innerText = `${viewers.length} మంది`;
+            let viewersObj = getActiveLiveViewers();
+            let viewersArr = Object.values(viewersObj);
+            
+            totalElem.innerText = `${viewersArr.length} మంది`;
 
-            if (viewers.length > 0) {
-                listContainer.innerHTML = viewers.map((v, idx) => `
+            if (viewersArr.length > 0) {
+                listContainer.innerHTML = viewersArr.map((v, idx) => `
                     <div class="flex justify-between items-center p-2 rounded-lg border bg-stone-50 border-stone-200 text-stone-800">
                         <div class="flex flex-col">
                             <span class="font-bold flex items-center gap-1.5 text-xs">
                                 <span>👤</span>
                                 <span>${idx + 1}. ${v.name}</span>
                             </span>
-                            <span class="text-[10px] text-stone-500 pl-4 font-semibold">📞 ${v.phone || 'నమోదు కాలేదు'}</span>
+                            <span class="text-[10px] text-stone-500 pl-4 font-semibold">📞 ${v.phone}</span>
                         </div>
-                        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1 shrink-0">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> లైవ్ వీక్షకుడు
+                        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> ఆన్‌లైన్ (LIVE)
                         </span>
                     </div>
                 `).join('');
             } else {
-                listContainer.innerHTML = '<p class="text-stone-500 text-center py-2">ఎవరూ అందుబాటులో లేరు</p>';
+                listContainer.innerHTML = '<p class="text-stone-500 text-center py-2">ప్రస్తుతం ఎవరూ ఆన్‌లైన్‌లో లేరు</p>';
             }
 
             document.getElementById('viewersModal').classList.remove('hidden');
@@ -543,47 +557,20 @@
             document.getElementById('viewersModal').classList.add('hidden');
         }
 
-        function openEventAttendeesModal() {
-            const container = document.getElementById('eventAttendeesListContainer');
-            const totalElem = document.getElementById('modalEventAttendeesTotal');
-            
-            let attendees = database.generalAttendance.filter(g => g.date === currentActiveMeetingDate);
-            totalElem.innerText = `${attendees.length} మంది`;
-
-            if (attendees.length > 0) {
-                container.innerHTML = attendees.map((att, idx) => `
-                    <div class="flex justify-between items-center p-2 rounded-lg border bg-stone-50 border-stone-200 text-stone-800">
-                        <div class="flex flex-col">
-                            <span class="font-bold text-xs">👤 ${idx + 1}. ${att.name}</span>
-                            <span class="text-[10px] text-stone-500 pl-4">📞 ${att.phone || 'నమోదు కాలేదు'}</span>
-                        </div>
-                        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">హాజరయ్యారు</span>
-                    </div>
-                `).join('');
-            } else {
-                container.innerHTML = '<p class="text-stone-500 text-center py-3">ఈ ఈవెంట్‌కు ఇంకా ఎవరూ హాజరు నమోదు చేయలేదు</p>';
+        function handleAttendanceClick() {
+            let savedName = localStorage.getItem('polamma_viewer_name');
+            if (!savedName) {
+                checkViewerDetailsPrompt();
+                return;
             }
-
-            document.getElementById('eventAttendeesModal').classList.remove('hidden');
-        }
-
-        function closeEventAttendeesModal() {
-            document.getElementById('eventAttendeesModal').classList.add('hidden');
+            openSelfAttendanceModal();
         }
 
         function openSelfAttendanceModal() {
-            const nameInput = document.getElementById('attUserInputName');
-            const phoneInput = document.getElementById('attUserPhone');
-            
+            document.getElementById('attUserInputName').value = localStorage.getItem('polamma_viewer_name') || '';
+            document.getElementById('attUserPhone').value = localStorage.getItem('polamma_viewer_phone') || '';
             document.getElementById('attMeetingDate').innerText = currentActiveMeetingDate;
             document.getElementById('attStatusMsg').classList.add('hidden');
-
-            let savedName = localStorage.getItem('polamma_viewer_name');
-            let savedPhone = localStorage.getItem('polamma_viewer_phone');
-            
-            if (savedName) nameInput.value = savedName;
-            if (savedPhone) phoneInput.value = savedPhone;
-
             document.getElementById('selfAttendanceModal').classList.remove('hidden');
         }
 
@@ -607,7 +594,7 @@
             statusMsg.classList.add('hidden');
 
             try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     body: JSON.stringify({
                         meetingDate: currentActiveMeetingDate,
@@ -651,6 +638,7 @@
             return new Date(dateStr);
         }
 
+        // Fetch Google Sheet Data for Donations, Expenses, Committee, and Updates
         async function fetchLiveData() {
             if (!GOOGLE_SCRIPT_URL) return;
             try {
@@ -676,18 +664,8 @@
                 }
                 updateDashboard();
                 renderEventsData();
-                updateLiveViewersCountUI();
             } catch (err) {
                 console.error("Error fetching live data:", err);
-            }
-        }
-
-        function updateLiveViewersCountUI() {
-            const countElem = document.getElementById('liveViewerCount');
-            let viewersCount = database.generalAttendance ? database.generalAttendance.length : 0;
-            if (viewersCount < 1) viewersCount = 1; // Minimum show 1 if connected
-            if (countElem) {
-                countElem.innerText = viewersCount;
             }
         }
 
@@ -968,10 +946,13 @@
         checkViewerDetailsPrompt();
         fetchLiveData();
 
+        // Refresh Google Sheet data every 10 seconds
         setInterval(() => {
             fetchLiveData();
         }, 10000);
 
+        // Update live counter display continuously
+        setInterval(updateLiveCounterDisplay, 2000);
     </script>
 </body>
 </html>
