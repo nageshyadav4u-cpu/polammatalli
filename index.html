@@ -204,7 +204,7 @@
                 శ్రీ బురగాన పోలమ్మ సంబరాల వెబ్‌సైట్
             </h3>
             <p class="text-xs text-stone-300">
-                వెబ్‌సైట్ వీక్షించడానికి కొత్త యూజర్లు మీ వివరాలు నమోదు చేయండి:
+                వెబ్‌సైట్ వీక్షించడానికి మీ పేరు మరియు మొబైల్ నంబర్ నమోదు చేయండి:
             </p>
             <input type="text" id="viewerNameInput" placeholder="మీ పూర్తి పేరు..." class="w-full bg-stone-800 text-amber-200 border border-yellow-500/60 rounded-xl px-3 py-2 text-xs font-bold text-center focus:outline-none focus:border-yellow-400">
             <input type="tel" id="viewerPhoneInput" maxlength="10" placeholder="10 అంకెల మొబైల్ నంబర్..." class="w-full bg-stone-800 text-amber-200 border border-yellow-500/60 rounded-xl px-3 py-2 text-xs font-bold text-center focus:outline-none focus:border-yellow-400">
@@ -460,7 +460,7 @@
             let savedName = localStorage.getItem('polamma_viewer_name');
             let savedPhone = localStorage.getItem('polamma_viewer_phone');
             
-            if (!savedName || !savedPhone) {
+            if (!savedName || !savedPhone || savedName.trim() === "" || savedPhone.length !== 10) {
                 document.getElementById('namePromptModal').classList.remove('hidden');
                 document.getElementById('mainContainerApp').classList.add('locked-content');
             } else {
@@ -483,7 +483,7 @@
                 
                 initViewerSession(nameInput, phoneInput);
             } else {
-                alert("దయచేసి సరైన పేరు మరియు 10 అంకెల ఫోన్ నంబర్ ఎంటర్ చేయండి.");
+                alert("దయచేసి సరైన పేరు మరియు 10 అంకెల మొబైల్ నంబర్ ఎంటర్ చేయండి.");
             }
         }
 
