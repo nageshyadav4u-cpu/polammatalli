@@ -81,7 +81,7 @@
             <span id="dashBalance" class="text-2xl font-black text-red-900">₹0/-</span>
         </div>
 
-        <!-- DONATE HERE BUTTON (Highlighted Prominently) -->
+        <!-- DONATE HERE BUTTON -->
         <button onclick="openDonateModal()" class="w-full bg-gradient-to-r from-emerald-500 via-green-600 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 text-white font-black text-lg py-4 px-4 rounded-xl shadow-xl border-2 border-emerald-300 transition transform active:scale-98 flex justify-between items-center cursor-pointer animate-pulse">
             <span class="flex items-center gap-2">
                 <span class="text-2xl">🙏</span>
@@ -118,6 +118,15 @@
                 </span>
                 <span>➔</span>
             </a>
+
+            <!-- Aveti Button moved under Facebook button -->
+            <button onclick="openAvetiModal()" class="w-full bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:to-yellow-600 text-stone-950 font-black text-base py-3 px-4 rounded-xl shadow-lg border-2 border-yellow-300 transition transform active:scale-98 flex justify-between items-center cursor-pointer">
+                <span class="flex items-center gap-2">
+                    <span class="text-xl">🪔</span>
+                    <span>ఆవేటి వారాలు 2026 లెక్కలు</span>
+                </span>
+                <span class="bg-stone-950 text-yellow-400 text-xs px-2.5 py-1 rounded-full font-bold shadow">వివరాలు ➔</span>
+            </button>
         </div>
 
         <!-- Dynamic Daily Updates Section -->
@@ -226,6 +235,42 @@
         </div>
     </div>
 
+    <!-- Aveti Modal -->
+    <div id="avetiModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white">
+                <h3 class="font-bold text-lg flex items-center gap-2">
+                    <span>🪔</span> ఆవేటి వారాలు 2026 లెక్కలు
+                </h3>
+                <button onclick="closeAvetiModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
+            </div>
+            <div class="p-3 bg-amber-50 border-b border-amber-200 grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="bg-emerald-100 border border-emerald-300 p-2 rounded-lg">
+                    <p class="text-[10px] text-emerald-800 font-bold">వసూళ్లు</p>
+                    <p id="avetiTotalCol" class="font-black text-emerald-700 mt-0.5">₹0/-</p>
+                </div>
+                <div class="bg-red-100 border border-red-300 p-2 rounded-lg">
+                    <p class="text-[10px] text-red-800 font-bold">ఖర్చులు</p>
+                    <p id="avetiTotalExp" class="font-black text-red-700 mt-0.5">₹0/-</p>
+                </div>
+                <div class="bg-yellow-100 border border-yellow-300 p-2 rounded-lg">
+                    <p class="text-[10px] text-yellow-900 font-bold">నిల్వ</p>
+                    <p id="avetiBalance" class="font-black text-amber-900 mt-0.5">₹0/-</p>
+                </div>
+            </div>
+            <div class="p-4 overflow-y-auto flex-grow space-y-4 text-xs">
+                <div>
+                    <h4 class="font-bold text-emerald-800 text-sm border-b-2 border-emerald-600 pb-1 mb-2">🤝 వసూళ్ల వివరాలు</h4>
+                    <div id="avetiDonationsContainer" class="space-y-2"></div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-red-800 text-sm border-b-2 border-red-600 pb-1 mb-2">📊 ఖర్చుల వివరాలు</h4>
+                    <div id="avetiExpensesContainer" class="space-y-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="updatesModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden max-h-[85vh] flex flex-col">
             <div class="p-4 bg-red-800 text-white flex justify-between items-center shrink-0">
@@ -254,7 +299,9 @@
             donations: [],
             expenses: [],
             updates: [],
-            committee: []
+            committee: [],
+            avetiDonations: [],
+            avetiExpenses: []
         };
 
         function parseDate(dateStr) {
@@ -276,6 +323,8 @@
                     database.expenses = data.expenses || [];
                     database.updates = data.updates || [];
                     database.committee = data.committee || [];
+                    database.avetiDonations = data.avetiDonations || [];
+                    database.avetiExpenses = data.avetiExpenses || [];
                 }
                 updateDashboard();
             } catch (err) {
@@ -293,6 +342,7 @@
             document.getElementById('dashBalance').innerText = `₹${netBalance.toLocaleString('en-IN')}/-`;
 
             renderLists();
+            renderAvetiData();
         }
 
         function renderLists() {
@@ -334,6 +384,36 @@
                     </div>` : '<div class="text-xl pl-2">📢</div>'}
                 </div>
             `}).join('') : '<p class="text-yellow-200 text-center py-2 text-sm">అప్‌డేట్స్ లేవు</p>';
+        }
+
+        function renderAvetiData() {
+            let totalCol = database.avetiDonations.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            let totalExp = database.avetiExpenses.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            let bal = totalCol - totalExp;
+
+            document.getElementById('avetiTotalCol').innerText = `₹${totalCol.toLocaleString('en-IN')}/-`;
+            document.getElementById('avetiTotalExp').innerText = `₹${totalExp.toLocaleString('en-IN')}/-`;
+            document.getElementById('avetiBalance').innerText = `₹${bal.toLocaleString('en-IN')}/-`;
+
+            document.getElementById('avetiDonationsContainer').innerHTML = database.avetiDonations.length > 0 ? database.avetiDonations.map((item, idx) => `
+                <div class="flex justify-between items-center border-b pb-1 text-stone-800">
+                    <div>
+                        <p class="font-bold">${idx + 1}. ${item.text}</p>
+                        <p class="text-[9px] text-stone-500">📅 ${item.date}</p>
+                    </div>
+                    <span class="font-bold text-emerald-600">₹${Number(item.amount).toLocaleString('en-IN')}/-</span>
+                </div>
+            `).join('') : '<p class="text-stone-400 text-center py-1">వివరాలు లేవు</p>';
+
+            document.getElementById('avetiExpensesContainer').innerHTML = database.avetiExpenses.length > 0 ? database.avetiExpenses.map((item, idx) => `
+                <div class="flex justify-between items-center border-b pb-1 text-stone-800">
+                    <div>
+                        <p class="font-bold">${idx + 1}. ${item.text}</p>
+                        <p class="text-[9px] text-stone-500">📅 ${item.date}</p>
+                    </div>
+                    <span class="font-bold text-red-600">₹${Number(item.amount).toLocaleString('en-IN')}/-</span>
+                </div>
+            `).join('') : '<p class="text-stone-400 text-center py-1">వివరాలు లేవు</p>';
         }
 
         function renderCommitteeList() {
@@ -404,7 +484,6 @@
             document.getElementById('updatesModal').classList.remove('hidden');
         }
 
-        // Donate & Copy Functions
         function openDonateModal() { document.getElementById('donateModal').classList.remove('hidden'); }
         function closeDonateModal() { document.getElementById('donateModal').classList.add('hidden'); }
 
@@ -421,7 +500,6 @@
             window.location.href = upiUrl;
         }
 
-        // Auto Banner Slider (6 Seconds)
         const slider = document.getElementById('bannerSlider');
         setInterval(() => {
             if (slider) {
@@ -442,6 +520,9 @@
         function openCommitteeModal() { document.getElementById('committeeModal').classList.remove('hidden'); }
         function closeCommitteeModal() { document.getElementById('committeeModal').classList.add('hidden'); }
 
+        function openAvetiModal() { document.getElementById('avetiModal').classList.remove('hidden'); }
+        function closeAvetiModal() { document.getElementById('avetiModal').classList.add('hidden'); }
+
         function closeUpdateModal() { document.getElementById('updatesModal').classList.add('hidden'); }
 
         window.onclick = function(event) {
@@ -449,14 +530,12 @@
             if (event.target == document.getElementById('donorsModal')) closeDonorsModal();
             if (event.target == document.getElementById('expensesModal')) closeExpensesModal();
             if (event.target == document.getElementById('committeeModal')) closeCommitteeModal();
+            if (event.target == document.getElementById('avetiModal')) closeAvetiModal();
             if (event.target == document.getElementById('updatesModal')) closeUpdateModal();
         }
 
-        // 🔄 Initial Load
         fetchLiveData();
 
-        // 🔄 AUTO REFRESH LOGIC:
-        // ప్రతి 10 సెకన్లకు గూగుల్ షీట్ నుండి లేటెస్ట్ డేటాను ఆటోమేటిక్‌గా అప్‌డేట్ చేస్తుంది
         setInterval(() => {
             fetchLiveData();
         }, 10000);
