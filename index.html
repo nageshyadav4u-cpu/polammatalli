@@ -57,6 +57,15 @@
     <!-- Main Content Container -->
     <main id="mainContainerApp" class="w-full max-w-md px-4 py-4 space-y-4 flex-grow pb-16 locked-content">
 
+        <!-- BUTTON: ఆవేటి వారాలు 2026 లెక్కలు -->
+        <button onclick="openAvetiModal()" class="w-full bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:to-yellow-600 text-stone-950 font-black text-base py-3 px-4 rounded-xl shadow-lg border-2 border-yellow-300 transition transform active:scale-98 flex justify-between items-center cursor-pointer">
+            <span class="flex items-center gap-2">
+                <span class="text-xl">🪔</span>
+                <span>ఆవేటి వారాలు 2026 లెక్కలు</span>
+            </span>
+            <span class="bg-stone-950 text-yellow-400 text-xs px-2.5 py-1 rounded-full font-bold shadow">వివరాలు ➔</span>
+        </button>
+
         <!-- Dashboard -->
         <div class="grid grid-cols-2 gap-3 pt-1">
             <div class="bg-emerald-800 p-3 rounded-xl shadow-md border border-emerald-500 text-center">
@@ -110,15 +119,6 @@
                 </span>
                 <span>➔</span>
             </a>
-
-            <!-- BUTTON: ఆవేటి వారాలు 2026 లెక్కలు (Moved to bottom of Facebook updates) -->
-            <button onclick="openAvetiModal()" class="w-full bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:to-yellow-600 text-stone-950 font-black text-base py-3 px-4 rounded-xl shadow-lg border-2 border-yellow-300 transition transform active:scale-98 flex justify-between items-center cursor-pointer">
-                <span class="flex items-center gap-2">
-                    <span class="text-xl">🪔</span>
-                    <span>ఆవేటి వారాలు 2026 లెక్కలు</span>
-                </span>
-                <span class="bg-stone-950 text-yellow-400 text-xs px-2.5 py-1 rounded-full font-bold shadow">వివరాలు ➔</span>
-            </button>
         </div>
 
         <div class="space-y-3">
@@ -231,18 +231,19 @@
         </div>
     </div>
 
-    <!-- COMMITTEE MODAL -->
+    <!-- COMMITTEE MODAL (UPDATED WITH CASTE GROUPING, CALL/WHATSAPP ICONS, & ATTENDANCE CHECKBOXES) -->
     <div id="committeeModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[82vh] flex flex-col shadow-2xl overflow-hidden">
+        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-md max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white rounded-t-2xl shrink-0">
                 <h3 class="font-bold text-base flex items-center gap-1.5">
-                    <span>👥 కమిటీ సభ్యుల వివరాలు</span>
+                    <span>👥 కులాల వారీగా కమిటీ సభ్యులు</span>
                     <span class="bg-amber-900 text-yellow-300 text-xs px-2 py-0.5 rounded-full font-black border border-yellow-300/50" id="modalCommitteeCount">0</span>
                 </h3>
                 <button onclick="closeCommitteeModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
             </div>
 
-            <div id="committeeListContainer" class="p-4 overflow-y-auto flex-grow space-y-4"></div>
+            <!-- Committee Members Container Grouped by Caste -->
+            <div id="committeeListContainer" class="p-4 overflow-y-auto flex-grow space-y-4 text-xs"></div>
         </div>
     </div>
 
@@ -268,6 +269,13 @@
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOky57nxfks4jI243SMLKOH-4a_LB19XmjtYSaYEQNo7z40hKc8l-gkch_e8THyuiz/exec";
         const SITE_VERSION = "v2";
+
+        const CASTE_COLOR_THEMES = [
+            { bg: "bg-amber-50", border: "border-amber-300", header: "text-amber-900 border-amber-200" },
+            { bg: "bg-blue-50", border: "border-blue-300", header: "text-blue-900 border-blue-200" },
+            { bg: "bg-emerald-50", border: "border-emerald-300", header: "text-emerald-900 border-emerald-200" },
+            { bg: "bg-purple-50", border: "border-purple-300", header: "text-purple-900 border-purple-200" }
+        ];
 
         function checkResetVersion() {
             let savedVersion = localStorage.getItem('polamma_site_version');
@@ -389,14 +397,7 @@
             document.getElementById('btnCommitteeCount').innerText = `${database.committee.length} మంది`;
             document.getElementById('modalCommitteeCount').innerText = `${database.committee.length} మంది`;
             
-            document.getElementById('committeeListContainer').innerHTML = database.committee.length > 0 ? database.committee.map((m, idx) => `
-                <div class="flex justify-between items-center border-b pb-2 text-xs text-stone-800">
-                    <div>
-                        <p class="font-bold text-stone-900">${idx + 1}. ${m.name}</p>
-                        <p class="text-[10px] text-stone-500">📞 ${m.phone} | 🚩 ${m.caste || 'ఇతర'}</p>
-                    </div>
-                </div>
-            `).join('') : '<p class="text-stone-500 text-center py-2 text-sm">సభ్యులు లేరు</p>';
+            renderCommitteeGroupedByCaste();
 
             let sortedUpdates = [...database.updates].sort((a, b) => new Date(b.date) - new Date(a.date));
             document.getElementById('updatesListContainer').innerHTML = sortedUpdates.length > 0 ? sortedUpdates.map((item, index) => `
@@ -408,6 +409,72 @@
                     <span>➔</span>
                 </div>
             `).join('') : '<p class="text-yellow-200 text-center py-2 text-sm">అప్‌డేట్స్ లేవు</p>';
+        }
+
+        // Render Committee Grouped by Caste with Call, WhatsApp & Checkbox Attendance
+        function renderCommitteeGroupedByCaste() {
+            const container = document.getElementById('committeeListContainer');
+            if (!database.committee || database.committee.length === 0) {
+                container.innerHTML = '<p class="text-stone-500 text-center py-4">సభ్యుల వివరాలు లేవు</p>';
+                return;
+            }
+
+            const grouped = {};
+            database.committee.forEach(m => {
+                const caste = m.caste && m.caste.trim() !== "" ? m.caste.trim() : "ఇతర సభ్యులు";
+                if (!grouped[caste]) grouped[caste] = [];
+                grouped[caste].push(m);
+            });
+
+            let html = '';
+            let colorIdx = 0;
+
+            for (const caste in grouped) {
+                const theme = CASTE_COLOR_THEMES[colorIdx % CASTE_COLOR_THEMES.length];
+                colorIdx++;
+
+                html += `
+                    <div class="${theme.bg} rounded-xl p-3 border ${theme.border} shadow-sm space-y-2">
+                        <h4 class="font-bold ${theme.header} text-sm border-b pb-1 flex justify-between items-center">
+                            <span>🚩 ${caste}</span>
+                            <span class="text-[10px] bg-white px-2 py-0.5 rounded-full font-bold border">${grouped[caste].length} సభ్యులు</span>
+                        </h4>
+                        <div class="space-y-2">
+                `;
+
+                grouped[caste].forEach((member, idx) => {
+                    const cleanPhone = member.phone ? String(member.phone).replace(/[^0-9]/g, '') : '';
+                    // Assuming attendance summary or check status (if available from Google Sheet)
+                    const isPresent = member.attendanceSummary && (member.attendanceSummary.includes('1/1') || member.attendanceSummary.toUpperCase().includes('P') || member.attendanceSummary === 'Present');
+
+                    html += `
+                        <div class="bg-white p-2.5 rounded-lg border border-stone-200 flex items-center justify-between shadow-2xs">
+                            <div class="space-y-0.5">
+                                <p class="font-bold text-stone-900">${idx + 1}. ${member.name}</p>
+                                <p class="text-[10px] text-stone-500">📞 ${member.phone || 'నంబర్ లేదు'}</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                ${cleanPhone.length >= 10 ? `
+                                    <a href="tel:${cleanPhone}" class="w-7 h-7 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full flex items-center justify-center shadow-xs text-xs" title="కాల్ చేయండి">
+                                        📞
+                                    </a>
+                                    <a href="https://wa.me/91${cleanPhone}" target="_blank" class="w-7 h-7 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center shadow-xs text-xs" title="వాట్సాప్ చాಟ್">
+                                        💬
+                                    </a>
+                                ` : ''}
+                                <div class="flex flex-col items-center pl-1 border-l border-stone-200">
+                                    <label class="text-[9px] font-bold text-stone-600 mb-0.5">హాజరు</label>
+                                    <input type="checkbox" ${isPresent ? 'checked' : ''} disabled class="w-4 h-4 accent-emerald-600 cursor-pointer">
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div></div>`;
+            }
+
+            container.innerHTML = html;
         }
 
         function renderAvetiData() {
