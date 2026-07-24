@@ -91,13 +91,6 @@
                 వివరాలు సేకరించబడుతున్నాయి...
             </p>
 
-            <div class="flex items-center justify-between bg-stone-950/90 text-amber-300 p-2 rounded-lg border border-yellow-400/40 text-xs cursor-pointer hover:bg-stone-900 transition" onclick="openEventAttendeesModal()">
-                <span class="flex items-center gap-1 font-bold">
-                    <span>📊</span> ఇప్పటివరకు హాజరైన వారు (చూడండి ➔):
-                </span>
-                <span id="bannerMeetingAttCount" class="bg-emerald-600 text-white font-black px-2 py-0.5 rounded-full text-xs">0 మంది</span>
-            </div>
-
             <div class="pt-0.5">
                 <button id="btnMainSelfAttendance" onclick="handleAttendanceClick()" class="w-full bg-stone-950 hover:bg-stone-900 text-amber-400 font-extrabold text-xs py-2.5 px-3 rounded-lg shadow transition flex items-center justify-center gap-2 cursor-pointer border border-yellow-400/50">
                     <span id="btnAttendanceText">📝 హాజరు నమోదు చేయండి (Mark Attendance)</span>
@@ -178,23 +171,6 @@
     </main>
 
     <!-- Modals -->
-
-    <!-- POPUP: EVENT ATTENDEES (GENERAL ATTENDANCE LIST) -->
-    <div id="eventAttendeesModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-4 border-b flex justify-between items-center bg-emerald-700 text-white">
-                <h3 class="font-bold text-base flex items-center gap-2">
-                    <span>👥</span> ఈవెంట్‌కు హాజరైన వారి జాబితా
-                </h3>
-                <button onclick="closeEventAttendeesModal()" class="text-2xl font-bold cursor-pointer">&times;</button>
-            </div>
-            <div class="p-3 bg-emerald-50 border-b border-emerald-200 text-xs text-emerald-900 font-bold flex justify-between items-center">
-                <span>మొత్తం హాజరైన వారు:</span>
-                <span id="modalEventAttendeesTotal" class="bg-emerald-700 text-white px-2 py-0.5 rounded-full text-xs font-black">0 మంది</span>
-            </div>
-            <div id="eventAttendeesListContainer" class="p-4 overflow-y-auto flex-grow space-y-2 text-xs"></div>
-        </div>
-    </div>
 
     <!-- POPUP 1: FORCED REGISTRATION FOR NEW USERS -->
     <div id="namePromptModal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
@@ -629,7 +605,7 @@
             { bg: "bg-emerald-50", border: "border-emerald-300", header: "text-emerald-900 border-emerald-200", btn: "bg-emerald-600 hover:bg-emerald-700" }
         ];
 
-        let database = { donations: [], expenses: [], updates: [], committee: [], committeeMeetingSummaries: [], avetiDonations: [], avetiExpenses: [], generalAttendance: [], events: [] };
+        let database = { donations: [], expenses: [], updates: [], committee: [], committeeMeetingSummaries: [], avetiDonations: [], avetiExpenses: [], events: [] };
 
         function parseDate(dateStr) {
             if(!dateStr) return new Date(0);
@@ -660,7 +636,6 @@
 
                     database.avetiDonations = data.avetiDonations || [];
                     database.avetiExpenses = data.avetiExpenses || [];
-                    database.generalAttendance = data.generalAttendance || [];
                 }
                 updateDashboard();
                 renderEventsData();
@@ -704,21 +679,6 @@
 
             renderLists();
             renderAvetiData();
-            updateMeetingAttendanceCountUI();
-        }
-
-        function updateMeetingAttendanceCountUI() {
-            const countBadge = document.getElementById('bannerMeetingAttCount');
-            let count = 0;
-
-            if (database.generalAttendance && database.generalAttendance.length > 0) {
-                const genCount = database.generalAttendance.filter(g => g.date === currentActiveMeetingDate).length;
-                count = genCount;
-            }
-
-            if (countBadge) {
-                countBadge.innerText = `${count} మంది`;
-            }
         }
 
         function renderLists() {
@@ -946,7 +906,7 @@
         checkViewerDetailsPrompt();
         fetchLiveData();
 
-        // Refresh Google Sheet data every 10 seconds
+        // Refresh Google Sheet data every 10 seconds for donations and expenses
         setInterval(() => {
             fetchLiveData();
         }, 10000);
