@@ -57,41 +57,6 @@
     <!-- Main Content Container -->
     <main id="mainContainerApp" class="w-full max-w-md px-4 py-4 space-y-4 flex-grow pb-16 locked-content">
 
-        <!-- DYNAMIC EVENT SCHEDULE BANNER -->
-        <div id="activeEventBanner" class="w-full bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 text-stone-950 rounded-xl p-3.5 shadow-xl border-2 border-yellow-300 space-y-2.5">
-            
-            <div class="flex justify-between items-center border-b border-amber-900/30 pb-1.5">
-                <span class="font-extrabold text-sm flex items-center gap-1.5 text-stone-900">
-                    <span>📢</span> <span id="eventTitle">ఈవెంట్ వివరాలు లోడ్ అవుతున్నాయి...</span>
-                </span>
-                <span id="eventBadgeStatus" class="text-[10px] bg-stone-950 text-yellow-300 font-black px-2 py-0.5 rounded-full border border-yellow-400/40">ప్రత్యక్ష ఈవెంట్</span>
-            </div>
-
-            <!-- LIVE VIDEO STREAM CONTAINER -->
-            <div id="liveStreamWrapper" class="w-full rounded-xl overflow-hidden border-2 border-amber-400 shadow-md bg-black hidden">
-                <div class="relative w-full aspect-video">
-                    <iframe id="liveStreamIframe" src="" class="absolute top-0 left-0 w-full h-full border-0" allowfullscreen></iframe>
-                </div>
-                <div class="bg-red-700 text-white text-[10px] font-extrabold py-1 px-2 text-center animate-pulse flex items-center justify-center gap-1">
-                    <span class="w-2 h-2 rounded-full bg-white animate-ping"></span> ప్రత్యక్ష ప్రసారం (LIVE STREAMING)
-                </div>
-            </div>
-
-            <div class="bg-stone-950 text-white p-2.5 rounded-lg border border-yellow-400/50 space-y-1.5 shadow-inner">
-                <div class="flex justify-between items-center text-xs font-bold text-amber-300">
-                    <span>📅 తేదీ: <b id="eventDate" class="text-white font-extrabold">--/--/----</b></span>
-                    <span>⏰ సమయం: <b id="eventTime" class="text-emerald-400 font-extrabold">--:-- --</b></span>
-                </div>
-                <div class="text-[11px] font-bold text-amber-200/90 border-t border-stone-800 pt-1 flex items-center gap-1">
-                    <span>📍 స్థలం:</span> <span id="eventLocation" class="text-white font-extrabold">--</span>
-                </div>
-            </div>
-
-            <p id="eventDetails" class="text-xs font-bold text-stone-900 leading-snug px-0.5 min-h-[1.5rem]">
-                వివరాలు సేకరించబడుతున్నాయి...
-            </p>
-        </div>
-
         <!-- BUTTON: ఆవేటి వారాలు 2026 లెక్కలు -->
         <button onclick="openAvetiModal()" class="w-full bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:to-yellow-600 text-stone-950 font-black text-base py-3 px-4 rounded-xl shadow-lg border-2 border-yellow-300 transition transform active:scale-98 flex justify-between items-center cursor-pointer">
             <span class="flex items-center gap-2">
@@ -201,6 +166,7 @@
         </div>
     </div>
 
+    <!-- AVETI MODAL -->
     <div id="avetiModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white">
@@ -243,6 +209,7 @@
         </div>
     </div>
 
+    <!-- DONORS MODAL -->
     <div id="donorsModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl">
             <div class="p-4 border-b flex justify-between items-center bg-emerald-700 text-white rounded-t-2xl">
@@ -253,6 +220,7 @@
         </div>
     </div>
 
+    <!-- EXPENSES MODAL -->
     <div id="expensesModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[75vh] flex flex-col shadow-2xl">
             <div class="p-4 border-b flex justify-between items-center bg-red-700 text-white rounded-t-2xl">
@@ -263,6 +231,7 @@
         </div>
     </div>
 
+    <!-- COMMITTEE MODAL -->
     <div id="committeeModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm max-h-[82vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b flex justify-between items-center bg-amber-600 text-white rounded-t-2xl shrink-0">
@@ -277,6 +246,7 @@
         </div>
     </div>
 
+    <!-- UPDATES MODAL -->
     <div id="updatesModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white text-stone-900 rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden max-h-[85vh] flex flex-col">
             <div class="p-4 bg-red-800 text-white flex justify-between items-center shrink-0">
@@ -352,7 +322,7 @@
             }
         }
 
-        let database = { donations: [], expenses: [], updates: [], committee: [], events: [], viewers: [] };
+        let database = { donations: [], expenses: [], updates: [], committee: [], viewers: [] };
 
         async function fetchLiveData() {
             if (!GOOGLE_SCRIPT_URL) return;
@@ -363,14 +333,12 @@
                     database.donations = data.donations || [];
                     database.expenses = data.expenses || [];
                     database.updates = data.updates || [];
-                    database.events = data.events || [];
                     database.committee = data.committee && data.committee.members ? data.committee.members : (data.committee || []);
                     database.avetiDonations = data.avetiDonations || [];
                     database.avetiExpenses = data.avetiExpenses || [];
                     database.viewers = data.viewers || [];
                 }
                 updateDashboard();
-                renderEventsData();
                 updateViewersCountUI();
             } catch (err) {
                 console.error("Error fetching live data:", err);
@@ -381,27 +349,6 @@
             const countElem = document.getElementById('liveViewerCount');
             if (countElem) {
                 countElem.innerText = database.viewers.length > 0 ? database.viewers.length : 1;
-            }
-        }
-
-        function renderEventsData() {
-            if (database.events && database.events.length > 0) {
-                const latestEvent = database.events[0];
-                document.getElementById('eventTitle').innerText = latestEvent.title || 'గ్రామ కమిటీ మీటింగ్';
-                document.getElementById('eventDate').innerText = latestEvent.date || '--/--/----';
-                document.getElementById('eventTime').innerText = latestEvent.time || '--:-- --';
-                document.getElementById('eventLocation').innerText = latestEvent.location || 'గ్రామ సచివాలయం';
-                document.getElementById('eventDetails').innerText = latestEvent.details || 'వివరాలు నమోదు కాలేదు';
-
-                const liveWrapper = document.getElementById('liveStreamWrapper');
-                const liveIframe = document.getElementById('liveStreamIframe');
-                if (latestEvent.liveLink && latestEvent.liveLink.trim() !== "") {
-                    liveIframe.src = latestEvent.liveLink.trim();
-                    liveWrapper.classList.remove('hidden');
-                } else {
-                    liveWrapper.classList.add('hidden');
-                    liveIframe.src = "";
-                }
             }
         }
 
