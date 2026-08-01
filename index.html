@@ -371,7 +371,8 @@
                         <img src="${item.image1}" class="w-full h-full object-cover">
                     </div>` : '<div class="text-xl pl-2">📢</div>'}
                 </div>
-            `}).join('') : '<p class="text-yellow-200 text-center py-2 text-sm">అప్‌డేట్స్ లేవు</p>';
+            `;
+            }).join('') : '<p class="text-yellow-200 text-center py-2 text-sm">అప్‌డేట్స్ లేవు</p>';
         }
 
         function renderAvetiData() {
@@ -512,6 +513,7 @@
         }
 
         fetchLiveData();
+        openAvetiModal(); // Automatically open the Aveti Accounts popup screen when the website opens
 
         setInterval(() => {
             fetchLiveData();
